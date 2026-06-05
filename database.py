@@ -72,6 +72,26 @@ CREATE TABLE IF NOT EXISTS feedback (
 """)
 
 cursor.execute("""
+CREATE TABLE IF NOT EXISTS lesson_plans (
+    lesson_plan_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    course_id INTEGER,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    upload_date TEXT,
+    FOREIGN KEY(course_id) REFERENCES courses(course_id)
+)
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS learning_objectives (
+    objective_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    course_id INTEGER,
+    description TEXT NOT NULL,
+    FOREIGN KEY(course_id) REFERENCES courses(course_id)
+)
+""")
+
+cursor.execute("""
 INSERT OR IGNORE INTO users (user_id, name, email, password, role)
 VALUES
 (1, 'Student User', 'student@test.com', 'password', 'Student'),
@@ -107,6 +127,18 @@ cursor.execute("""
 INSERT OR IGNORE INTO feedback (feedback_id, assignment_id, student_id, comments, post_date)
 VALUES
 (1, 1, 1, 'Good work establishing the initial DevOps pipeline and application shell.', '2026-06-05')
+""")
+
+cursor.execute("""
+INSERT OR IGNORE INTO lesson_plans (lesson_plan_id, course_id, title, content, upload_date)
+VALUES
+(1, 1, 'Module 5 DevOps Lesson Plan', 'Review Jenkins, GitHub, Flask, SQLite, automated testing, and deployment flow.', '2026-06-05')
+""")
+
+cursor.execute("""
+INSERT OR IGNORE INTO learning_objectives (objective_id, course_id, description)
+VALUES
+(1, 1, 'Demonstrate a working DevOps pipeline using GitHub, Jenkins, Flask, SQLite, and pytest.')
 """)
 
 conn.commit()

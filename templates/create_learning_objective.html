@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Learning Objective</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Create Learning Objective</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    <form method="POST" class="form-box">
+        <label>Course</label>
+        <select name="course_id" required>
+            {% for course in courses %}
+                <option value="{{ course['course_id'] }}">{{ course['course_name'] }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Learning Objective</label>
+        <textarea name="description" required></textarea>
+
+        <button type="submit">Create Learning Objective</button>
+    </form>
+</main>
+</body>
+</html>

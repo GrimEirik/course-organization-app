@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Lesson Plan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Create Lesson Plan</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+
+    <form method="POST" class="form-box">
+
+        <label>Course</label>
+
+        <select name="course_id" required>
+            {% for course in courses %}
+                <option value="{{ course['course_id'] }}">
+                    {{ course['course_name'] }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label>Lesson Plan Title</label>
+        <input type="text" name="title" required>
+
+        <label>Lesson Plan Content</label>
+        <textarea name="content" required></textarea>
+
+        <label>Upload Date</label>
+        <input type="date" name="upload_date" required>
+
+        <button type="submit">
+            Create Lesson Plan
+        </button>
+
+    </form>
+
+</main>
+
+</body>
+</html>

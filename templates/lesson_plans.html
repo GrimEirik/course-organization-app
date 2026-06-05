@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lesson Plans</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Lesson Plans</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+
+    {% for plan in lesson_plans %}
+
+    <div class="card wide">
+        <h2>{{ plan["title"] }}</h2>
+
+        <p>
+            {{ plan["content"] }}
+        </p>
+
+        <p>
+            <strong>Uploaded:</strong>
+            {{ plan["upload_date"] }}
+        </p>
+    </div>
+
+    {% endfor %}
+
+</main>
+
+</body>
+</html>

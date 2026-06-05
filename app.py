@@ -129,6 +129,30 @@ def feedback():
     return render_template("feedback.html", feedback=feedback)
 
 
+@app.route("/lesson-plans")
+def lesson_plans():
+    if not login_required():
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    lesson_plans = conn.execute("SELECT * FROM lesson_plans").fetchall()
+    conn.close()
+
+    return render_template("lesson_plans.html", lesson_plans=lesson_plans)
+
+
+@app.route("/learning-objectives")
+def learning_objectives():
+    if not login_required():
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    objectives = conn.execute("SELECT * FROM learning_objectives").fetchall()
+    conn.close()
+
+    return render_template("learning_objectives.html", objectives=objectives)
+
+
 @app.route("/create-course", methods=["GET", "POST"])
 def create_course():
     if not instructor_required():
@@ -259,6 +283,58 @@ def provide_feedback():
 
     conn.close()
     return render_template("provide_feedback.html", assignments=assignments, students=students)
+
+
+@app.route("/create-lesson-plan", methods=["GET", "POST"])
+def create_lesson_plan():
+    if not instructor_required():
+        return redirect(url_for("dashboard"))
+
+    conn = get_db_connection()
+    courses = conn.execute("SELECT * FROM courses").fetchall()
+
+    if request.method == "POST":
+        course_id = request.form["course_id"]
+        title = request.form["title"]
+        content = request.form["content"]
+        upload_date = request.form["upload_date"]
+
+        conn.execute(
+            "INSERT INTO lesson_plans (course_id, title, content, upload_date) VALUES (?, ?, ?, ?)",
+            (course_id, title, content, upload_date)
+        )
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("lesson_plans"))
+
+    conn.close()
+    return render_template("create_lesson_plan.html", courses=courses)
+
+
+@app.route("/create-learning-objective", methods=["GET", "POST"])
+def create_learning_objective():
+    if not instructor_required():
+        return redirect(url_for("dashboard"))
+
+    conn = get_db_connection()
+    courses = conn.execute("SELECT * FROM courses").fetchall()
+
+    if request.method == "POST":
+        course_id = request.form["course_id"]
+        description = request.form["description"]
+
+        conn.execute(
+            "INSERT INTO learning_objectives (course_id, description) VALUES (?, ?)",
+            (course_id, description)
+        )
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("learning_objectives"))
+
+    conn.close()
+    return render_template("create_learning_objective.html", courses=courses)
 
 
 @app.route("/logout")
