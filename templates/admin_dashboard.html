@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Administrator Dashboard</h1>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</header>
+
+<main>
+    <h2>Welcome, {{ session["name"] }}</h2>
+    <p>Role: {{ session["role"] }}</p>
+
+    <section class="cards">
+        <a class="card" href="{{ url_for('courses') }}">Manage Courses</a>
+        <a class="card" href="{{ url_for('announcements') }}">View Announcements</a>
+        <a class="card" href="{{ url_for('grades') }}">View Grade Records</a>
+        <a class="card" href="{{ url_for('feedback') }}">View Feedback Records</a>
+    </section>
+</main>
+
+</body>
+</html>

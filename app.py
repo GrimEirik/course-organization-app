@@ -29,94 +29,154 @@ def login():
         password = request.form["password"]
 
         conn = get_db_connection()
+
         user = conn.execute(
             "SELECT * FROM users WHERE email = ? AND password = ?",
             (email, password)
         ).fetchone()
+
         conn.close()
 
         if user:
             session["user_id"] = user["user_id"]
             session["name"] = user["name"]
             session["role"] = user["role"]
+
             return redirect(url_for("dashboard"))
 
-        return render_template("login.html", error="Invalid login information.")
+        return render_template(
+            "login.html",
+            error="Invalid login information."
+        )
 
     return render_template("login.html")
 
 
 @app.route("/dashboard")
 def dashboard():
+
     if not login_required():
         return redirect(url_for("login"))
 
-    return render_template("dashboard.html")
+    role = session["role"]
+
+    if role == "Student":
+        return render_template("student_dashboard.html")
+
+    elif role == "Instructor":
+        return render_template("instructor_dashboard.html")
+
+    elif role == "Administrator":
+        return render_template("admin_dashboard.html")
+
+    return redirect(url_for("login"))
 
 
 @app.route("/courses")
 def courses():
+
     if not login_required():
         return redirect(url_for("login"))
 
     conn = get_db_connection()
-    courses = conn.execute("SELECT * FROM courses").fetchall()
+
+    courses = conn.execute(
+        "SELECT * FROM courses"
+    ).fetchall()
+
     conn.close()
 
-    return render_template("courses.html", courses=courses)
+    return render_template(
+        "courses.html",
+        courses=courses
+    )
 
 
 @app.route("/assignments")
 def assignments():
+
     if not login_required():
         return redirect(url_for("login"))
 
     conn = get_db_connection()
-    assignments = conn.execute("SELECT * FROM assignments").fetchall()
+
+    assignments = conn.execute(
+        "SELECT * FROM assignments"
+    ).fetchall()
+
     conn.close()
 
-    return render_template("assignments.html", assignments=assignments)
+    return render_template(
+        "assignments.html",
+        assignments=assignments
+    )
 
 
 @app.route("/announcements")
 def announcements():
+
     if not login_required():
         return redirect(url_for("login"))
 
     conn = get_db_connection()
-    announcements = conn.execute("SELECT * FROM announcements").fetchall()
+
+    announcements = conn.execute(
+        "SELECT * FROM announcements"
+    ).fetchall()
+
     conn.close()
 
-    return render_template("announcements.html", announcements=announcements)
+    return render_template(
+        "announcements.html",
+        announcements=announcements
+    )
 
 
 @app.route("/grades")
 def grades():
+
     if not login_required():
         return redirect(url_for("login"))
 
     conn = get_db_connection()
-    grades = conn.execute("SELECT * FROM grades").fetchall()
+
+    grades = conn.execute(
+        "SELECT * FROM grades"
+    ).fetchall()
+
     conn.close()
 
-    return render_template("grades.html", grades=grades)
+    return render_template(
+        "grades.html",
+        grades=grades
+    )
 
 
 @app.route("/feedback")
 def feedback():
+
     if not login_required():
         return redirect(url_for("login"))
 
     conn = get_db_connection()
-    feedback = conn.execute("SELECT * FROM feedback").fetchall()
+
+    feedback = conn.execute(
+        "SELECT * FROM feedback"
+    ).fetchall()
+
     conn.close()
 
-    return render_template("feedback.html", feedback=feedback)
+    return render_template(
+        "feedback.html",
+        feedback=feedback
+    )
 
 
 @app.route("/logout")
 def logout():
+
     session.clear()
+
     return redirect(url_for("login"))
 
 

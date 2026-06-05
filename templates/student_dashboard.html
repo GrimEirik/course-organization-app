@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Student Dashboard</h1>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</header>
+
+<main>
+    <h2>Welcome, {{ session["name"] }}</h2>
+    <p>Role: {{ session["role"] }}</p>
+
+    <section class="cards">
+        <a class="card" href="{{ url_for('courses') }}">View Courses</a>
+        <a class="card" href="{{ url_for('assignments') }}">View Assignments</a>
+        <a class="card" href="{{ url_for('grades') }}">View Grades</a>
+        <a class="card" href="{{ url_for('announcements') }}">View Announcements</a>
+        <a class="card" href="{{ url_for('feedback') }}">View Feedback</a>
+    </section>
+</main>
+
+</body>
+</html>
