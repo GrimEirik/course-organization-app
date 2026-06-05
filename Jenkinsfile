@@ -1,24 +1,27 @@
 pipeline {
     agent any
 
-    stages {
+    environment {
+        PYTHON = 'C:\\Users\\jetwo\\AppData\\Local\\Programs\\Python\\Python312\\python.exe'
+    }
 
+    stages {
         stage('Install Dependencies') {
             steps {
-                bat 'python -m pip install --upgrade pip'
-                bat 'pip install -r requirements.txt'
+                bat '"%PYTHON%" -m pip install --upgrade pip'
+                bat '"%PYTHON%" -m pip install -r requirements.txt'
             }
         }
 
         stage('Initialize Database') {
             steps {
-                bat 'python database.py'
+                bat '"%PYTHON%" database.py'
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'python -m pytest'
+                bat '"%PYTHON%" -m pytest'
             }
         }
 
