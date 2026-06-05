@@ -21,6 +21,17 @@ def instructor_required():
     return "user_id" in session and session["role"] == "Instructor"
 
 
+def student_required():
+    return "user_id" in session and session["role"] == "Student"
+
+
+def admin_or_instructor_required():
+    return (
+        "user_id" in session
+        and session["role"] in ["Instructor", "Administrator"]
+    )
+
+
 @app.route("/")
 def home():
     return redirect(url_for("login"))
@@ -55,15 +66,13 @@ def dashboard():
     if not login_required():
         return redirect(url_for("login"))
 
-    role = session["role"]
-
-    if role == "Student":
+    if session["role"] == "Student":
         return render_template("student_dashboard.html")
 
-    if role == "Instructor":
+    if session["role"] == "Instructor":
         return render_template("instructor_dashboard.html")
 
-    if role == "Administrator":
+    if session["role"] == "Administrator":
         return render_template("admin_dashboard.html")
 
     return redirect(url_for("login"))
@@ -153,6 +162,65 @@ def learning_objectives():
     return render_template("learning_objectives.html", objectives=objectives)
 
 
+@app.route("/submissions")
+def submissions():
+    if not admin_or_instructor_required():
+        return redirect(url_for("dashboard"))
+
+    conn = get_db_connection()
+    submissions = conn.execute("""
+        SELECT
+            submissions.submission_id,
+            assignments.title AS assignment_title,
+            users.name AS student_name,
+            submissions.submission_text,
+            submissions.submission_date,
+            submissions.status
+        FROM submissions
+        JOIN assignments ON submissions.assignment_id = assignments.assignment_id
+        JOIN users ON submissions.student_id = users.user_id
+    """).fetchall()
+    conn.close()
+
+    return render_template("submissions.html", submissions=submissions)
+
+
+@app.route("/submit-assignment", methods=["GET", "POST"])
+def submit_assignment():
+    if not student_required():
+        return redirect(url_for("dashboard"))
+
+    conn = get_db_connection()
+    assignments = conn.execute("SELECT * FROM assignments").fetchall()
+
+    if request.method == "POST":
+        assignment_id = request.form["assignment_id"]
+        submission_text = request.form["submission_text"]
+        submission_date = request.form["submission_date"]
+
+        conn.execute(
+            """
+            INSERT INTO submissions
+            (assignment_id, student_id, submission_text, submission_date, status)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                assignment_id,
+                session["user_id"],
+                submission_text,
+                submission_date,
+                "Submitted"
+            )
+        )
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("assignments"))
+
+    conn.close()
+    return render_template("submit_assignment.html", assignments=assignments)
+
+
 @app.route("/create-course", methods=["GET", "POST"])
 def create_course():
     if not instructor_required():
@@ -190,7 +258,11 @@ def create_assignment():
         points_possible = request.form["points_possible"]
 
         conn.execute(
-            "INSERT INTO assignments (course_id, title, due_date, points_possible) VALUES (?, ?, ?, ?)",
+            """
+            INSERT INTO assignments
+            (course_id, title, due_date, points_possible)
+            VALUES (?, ?, ?, ?)
+            """,
             (course_id, title, due_date, points_possible)
         )
         conn.commit()
@@ -217,7 +289,11 @@ def post_announcement():
         post_date = request.form["post_date"]
 
         conn.execute(
-            "INSERT INTO announcements (course_id, title, message, post_date) VALUES (?, ?, ?, ?)",
+            """
+            INSERT INTO announcements
+            (course_id, title, message, post_date)
+            VALUES (?, ?, ?, ?)
+            """,
             (course_id, title, message, post_date)
         )
         conn.commit()
@@ -245,7 +321,11 @@ def enter_grade():
         comments = request.form["comments"]
 
         conn.execute(
-            "INSERT INTO grades (assignment_id, student_id, score, comments) VALUES (?, ?, ?, ?)",
+            """
+            INSERT INTO grades
+            (assignment_id, student_id, score, comments)
+            VALUES (?, ?, ?, ?)
+            """,
             (assignment_id, student_id, score, comments)
         )
         conn.commit()
@@ -273,7 +353,11 @@ def provide_feedback():
         post_date = request.form["post_date"]
 
         conn.execute(
-            "INSERT INTO feedback (assignment_id, student_id, comments, post_date) VALUES (?, ?, ?, ?)",
+            """
+            INSERT INTO feedback
+            (assignment_id, student_id, comments, post_date)
+            VALUES (?, ?, ?, ?)
+            """,
             (assignment_id, student_id, comments, post_date)
         )
         conn.commit()
@@ -300,7 +384,11 @@ def create_lesson_plan():
         upload_date = request.form["upload_date"]
 
         conn.execute(
-            "INSERT INTO lesson_plans (course_id, title, content, upload_date) VALUES (?, ?, ?, ?)",
+            """
+            INSERT INTO lesson_plans
+            (course_id, title, content, upload_date)
+            VALUES (?, ?, ?, ?)
+            """,
             (course_id, title, content, upload_date)
         )
         conn.commit()
@@ -325,7 +413,11 @@ def create_learning_objective():
         description = request.form["description"]
 
         conn.execute(
-            "INSERT INTO learning_objectives (course_id, description) VALUES (?, ?)",
+            """
+            INSERT INTO learning_objectives
+            (course_id, description)
+            VALUES (?, ?)
+            """,
             (course_id, description)
         )
         conn.commit()

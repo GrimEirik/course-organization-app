@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Assignment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Submit Assignment</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    <form method="POST" class="form-box">
+        <label>Assignment</label>
+        <select name="assignment_id" required>
+            {% for assignment in assignments %}
+                <option value="{{ assignment['assignment_id'] }}">
+                    {{ assignment['title'] }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label>Submission Text</label>
+        <textarea name="submission_text" required></textarea>
+
+        <label>Submission Date</label>
+        <input type="date" name="submission_date" required>
+
+        <button type="submit">Submit Assignment</button>
+    </form>
+</main>
+
+</body>
+</html>

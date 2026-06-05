@@ -92,6 +92,19 @@ CREATE TABLE IF NOT EXISTS learning_objectives (
 """)
 
 cursor.execute("""
+CREATE TABLE IF NOT EXISTS submissions (
+    submission_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    assignment_id INTEGER,
+    student_id INTEGER,
+    submission_text TEXT NOT NULL,
+    submission_date TEXT,
+    status TEXT,
+    FOREIGN KEY(assignment_id) REFERENCES assignments(assignment_id),
+    FOREIGN KEY(student_id) REFERENCES users(user_id)
+)
+""")
+
+cursor.execute("""
 INSERT OR IGNORE INTO users (user_id, name, email, password, role)
 VALUES
 (1, 'Student User', 'student@test.com', 'password', 'Student'),
@@ -139,6 +152,12 @@ cursor.execute("""
 INSERT OR IGNORE INTO learning_objectives (objective_id, course_id, description)
 VALUES
 (1, 1, 'Demonstrate a working DevOps pipeline using GitHub, Jenkins, Flask, SQLite, and pytest.')
+""")
+
+cursor.execute("""
+INSERT OR IGNORE INTO submissions (submission_id, assignment_id, student_id, submission_text, submission_date, status)
+VALUES
+(1, 1, 1, 'Initial topology report submitted for review.', '2026-06-05', 'Submitted')
 """)
 
 conn.commit()

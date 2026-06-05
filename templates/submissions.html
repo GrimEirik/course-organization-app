@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submissions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Student Submissions</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    {% for submission in submissions %}
+        <div class="card wide">
+            <h2>{{ submission["assignment_title"] }}</h2>
+
+            <p>
+                <strong>Student:</strong>
+                {{ submission["student_name"] }}
+            </p>
+
+            <p>
+                <strong>Submission:</strong>
+                {{ submission["submission_text"] }}
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                {{ submission["submission_date"] }}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                {{ submission["status"] }}
+            </p>
+        </div>
+    {% endfor %}
+</main>
+
+</body>
+</html>
