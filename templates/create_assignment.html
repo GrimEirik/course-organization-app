@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Assignment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Create Assignment</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    <form method="POST" class="form-box">
+        <label>Course</label>
+        <select name="course_id" required>
+            {% for course in courses %}
+                <option value="{{ course['course_id'] }}">{{ course['course_name'] }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Assignment Title</label>
+        <input type="text" name="title" required>
+
+        <label>Due Date</label>
+        <input type="date" name="due_date" required>
+
+        <label>Points Possible</label>
+        <input type="number" name="points_possible" required>
+
+        <button type="submit">Create Assignment</button>
+    </form>
+</main>
+</body>
+</html>

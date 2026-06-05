@@ -16,11 +16,17 @@
     <p>Role: {{ session["role"] }}</p>
 
     <section class="cards">
-        <a class="card" href="{{ url_for('courses') }}">Manage Courses</a>
-        <a class="card" href="{{ url_for('assignments') }}">Manage Assignments</a>
-        <a class="card" href="{{ url_for('grades') }}">Manage Grades</a>
-        <a class="card" href="{{ url_for('announcements') }}">Post Announcements</a>
-        <a class="card" href="{{ url_for('feedback') }}">Provide Feedback</a>
+        <a class="card" href="{{ url_for('create_course') }}">Create Course</a>
+        <a class="card" href="{{ url_for('create_assignment') }}">Create Assignment</a>
+        <a class="card" href="{{ url_for('post_announcement') }}">Post Announcement</a>
+        <a class="card" href="{{ url_for('enter_grade') }}">Enter Grades</a>
+        <a class="card" href="{{ url_for('provide_feedback') }}">Provide Feedback</a>
+
+        <a class="card" href="{{ url_for('courses') }}">View Courses</a>
+        <a class="card" href="{{ url_for('assignments') }}">View Assignments</a>
+        <a class="card" href="{{ url_for('grades') }}">View Grades</a>
+        <a class="card" href="{{ url_for('announcements') }}">View Announcements</a>
+        <a class="card" href="{{ url_for('feedback') }}">View Feedback</a>
     </section>
 </main>
 

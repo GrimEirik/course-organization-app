@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post Announcement</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Post Announcement</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    <form method="POST" class="form-box">
+        <label>Course</label>
+        <select name="course_id" required>
+            {% for course in courses %}
+                <option value="{{ course['course_id'] }}">{{ course['course_name'] }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Announcement Title</label>
+        <input type="text" name="title" required>
+
+        <label>Message</label>
+        <textarea name="message" required></textarea>
+
+        <label>Post Date</label>
+        <input type="date" name="post_date" required>
+
+        <button type="submit">Post Announcement</button>
+    </form>
+</main>
+</body>
+</html>

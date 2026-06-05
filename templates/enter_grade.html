@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter Grade</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Enter Grade</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    <form method="POST" class="form-box">
+        <label>Assignment</label>
+        <select name="assignment_id" required>
+            {% for assignment in assignments %}
+                <option value="{{ assignment['assignment_id'] }}">{{ assignment['title'] }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Student</label>
+        <select name="student_id" required>
+            {% for student in students %}
+                <option value="{{ student['user_id'] }}">{{ student['name'] }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Score</label>
+        <input type="number" step="0.01" name="score" required>
+
+        <label>Comments</label>
+        <textarea name="comments"></textarea>
+
+        <button type="submit">Enter Grade</button>
+    </form>
+</main>
+</body>
+</html>
