@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grades</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Grades</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    {% for grade in grades %}
+        <div class="card wide">
+            <h2>Assignment ID: {{ grade["assignment_id"] }}</h2>
+            <p><strong>Score:</strong> {{ grade["score"] }}</p>
+            <p>{{ grade["comments"] }}</p>
+        </div>
+    {% endfor %}
+</main>
+</body>
+</html>

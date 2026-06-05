@@ -13,6 +13,10 @@ def get_db_connection():
     return conn
 
 
+def login_required():
+    return "user_id" in session
+
+
 @app.route("/")
 def home():
     return redirect(url_for("login"))
@@ -44,10 +48,70 @@ def login():
 
 @app.route("/dashboard")
 def dashboard():
-    if "user_id" not in session:
+    if not login_required():
         return redirect(url_for("login"))
 
     return render_template("dashboard.html")
+
+
+@app.route("/courses")
+def courses():
+    if not login_required():
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    courses = conn.execute("SELECT * FROM courses").fetchall()
+    conn.close()
+
+    return render_template("courses.html", courses=courses)
+
+
+@app.route("/assignments")
+def assignments():
+    if not login_required():
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    assignments = conn.execute("SELECT * FROM assignments").fetchall()
+    conn.close()
+
+    return render_template("assignments.html", assignments=assignments)
+
+
+@app.route("/announcements")
+def announcements():
+    if not login_required():
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    announcements = conn.execute("SELECT * FROM announcements").fetchall()
+    conn.close()
+
+    return render_template("announcements.html", announcements=announcements)
+
+
+@app.route("/grades")
+def grades():
+    if not login_required():
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    grades = conn.execute("SELECT * FROM grades").fetchall()
+    conn.close()
+
+    return render_template("grades.html", grades=grades)
+
+
+@app.route("/feedback")
+def feedback():
+    if not login_required():
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    feedback = conn.execute("SELECT * FROM feedback").fetchall()
+    conn.close()
+
+    return render_template("feedback.html", feedback=feedback)
 
 
 @app.route("/logout")

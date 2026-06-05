@@ -31,14 +31,20 @@ main {
     gap: 15px;
 }
 
-.card {
-    background: white;
-    padding: 25px;
-    width: 190px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    font-weight: bold;
-    text-align: center;
+.card a {
+    text-decoration: none;
+}
+
+a.card {
+    text-decoration: none;
+    color: #333;
+}
+
+.wide {
+    width: auto;
+    max-width: 800px;
+    text-align: left;
+    margin-bottom: 20px;
 }
 
 .login-page {

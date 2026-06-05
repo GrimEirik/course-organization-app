@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Announcements</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Announcements</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    {% for announcement in announcements %}
+        <div class="card wide">
+            <h2>{{ announcement["title"] }}</h2>
+            <p>{{ announcement["message"] }}</p>
+            <p><strong>Posted:</strong> {{ announcement["post_date"] }}</p>
+        </div>
+    {% endfor %}
+</main>
+</body>
+</html>

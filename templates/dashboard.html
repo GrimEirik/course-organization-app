@@ -18,16 +18,13 @@
     <p>Welcome, {{ session["name"] }}.</p>
     <p>Your role is: <strong>{{ session["role"] }}</strong></p>
 
-    <section class="cards">
-        <div class="card">Courses</div>
-        <div class="card">Modules</div>
-        <div class="card">Lesson Plans</div>
-        <div class="card">Assignments</div>
-        <div class="card">Grades</div>
-        <div class="card">Announcements</div>
-        <div class="card">Feedback</div>
-        <div class="card">Learning Objectives</div>
-    </section>
+<section class="cards">
+    <a class="card" href="{{ url_for('courses') }}">Courses</a>
+    <a class="card" href="{{ url_for('assignments') }}">Assignments</a>
+    <a class="card" href="{{ url_for('grades') }}">Grades</a>
+    <a class="card" href="{{ url_for('announcements') }}">Announcements</a>
+    <a class="card" href="{{ url_for('feedback') }}">Feedback</a>
+</section>
 </main>
 
 </body>

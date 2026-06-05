@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Instructor Feedback</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    {% for item in feedback %}
+        <div class="card wide">
+            <p>{{ item["comments"] }}</p>
+            <p><strong>Posted:</strong> {{ item["post_date"] }}</p>
+        </div>
+    {% endfor %}
+</main>
+</body>
+</html>

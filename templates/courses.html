@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Courses</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Courses</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    {% for course in courses %}
+        <div class="card wide">
+            <h2>{{ course["course_name"] }}</h2>
+            <p><strong>Instructor:</strong> {{ course["instructor"] }}</p>
+            <p>{{ course["description"] }}</p>
+        </div>
+    {% endfor %}
+</main>
+</body>
+</html>

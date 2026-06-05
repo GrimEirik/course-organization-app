@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assignments</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Assignments</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    {% for assignment in assignments %}
+        <div class="card wide">
+            <h2>{{ assignment["title"] }}</h2>
+            <p><strong>Due Date:</strong> {{ assignment["due_date"] }}</p>
+            <p><strong>Points Possible:</strong> {{ assignment["points_possible"] }}</p>
+        </div>
+    {% endfor %}
+</main>
+</body>
+</html>
