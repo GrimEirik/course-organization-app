@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Course Organization Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-page">
+
+    <div class="login-box">
+        <h1>Course Organization Application</h1>
+        <h2>Login</h2>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="test-users">
+            <p><strong>Test Users</strong></p>
+            <p>Student: student@test.com / password</p>
+            <p>Instructor: instructor@test.com / password</p>
+            <p>Admin: admin@test.com / password</p>
+        </div>
+    </div>
+
+</body>
+</html>

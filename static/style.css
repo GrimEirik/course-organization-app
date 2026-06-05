@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #333;
+}
+
+header {
+    background: #1f4e79;
+    color: white;
+    padding: 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header a {
+    color: white;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+main {
+    padding: 25px;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    width: 190px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    font-weight: bold;
+    text-align: center;
+}
+
+.login-page {
+    background: #1f4e79;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-box {
+    background: white;
+    padding: 30px;
+    width: 380px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+.login-box h1,
+.login-box h2 {
+    text-align: center;
+}
+
+input,
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    background: #1f4e79;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #173a59;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+
+.test-users {
+    font-size: 13px;
+    margin-top: 20px;
+    background: #f0f0f0;
+    padding: 10px;
+}

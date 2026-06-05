@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Course Organization Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Course Organization & Management Application</h1>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</header>
+
+<main>
+    <h2>Dashboard</h2>
+
+    <p>Welcome, {{ session["name"] }}.</p>
+    <p>Your role is: <strong>{{ session["role"] }}</strong></p>
+
+    <section class="cards">
+        <div class="card">Courses</div>
+        <div class="card">Modules</div>
+        <div class="card">Lesson Plans</div>
+        <div class="card">Assignments</div>
+        <div class="card">Grades</div>
+        <div class="card">Announcements</div>
+        <div class="card">Feedback</div>
+        <div class="card">Learning Objectives</div>
+    </section>
+</main>
+
+</body>
+</html>
