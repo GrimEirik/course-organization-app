@@ -90,7 +90,7 @@ def test_manage_users_requires_admin_login():
     response = tester.get("/manage-users")
     assert response.status_code == 302
 
-    def test_calendar_requires_login():
+def test_calendar_requires_login():
     tester = app.test_client()
     response = tester.get("/calendar")
     assert response.status_code == 302
