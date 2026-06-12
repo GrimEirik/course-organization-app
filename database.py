@@ -105,6 +105,30 @@ CREATE TABLE IF NOT EXISTS submissions (
 """)
 
 cursor.execute("""
+CREATE TABLE IF NOT EXISTS messages (
+    message_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    sender_id INTEGER,
+    sender_name TEXT NOT NULL,
+    sender_role TEXT NOT NULL,
+    recipient_role TEXT NOT NULL,
+    group_name TEXT,
+    message_type TEXT NOT NULL,
+    message_text TEXT NOT NULL,
+    sent_date TEXT NOT NULL,
+    FOREIGN KEY(sender_id) REFERENCES users(user_id)
+)
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS message_reads (
+    read_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER UNIQUE,
+    last_seen_message_id INTEGER DEFAULT 0,
+    FOREIGN KEY(user_id) REFERENCES users(user_id)
+)
+""")
+
+cursor.execute("""
 INSERT OR IGNORE INTO users (user_id, name, email, password, role)
 VALUES
 (1, 'Student User', 'student@test.com', 'password', 'Student'),
@@ -127,7 +151,7 @@ VALUES
 cursor.execute("""
 INSERT OR IGNORE INTO announcements (announcement_id, course_id, title, message, post_date)
 VALUES
-(1, 1, 'Module 6 Update', 'The project is being refined for role separation, testing, and code organization.', '2026-06-12')
+(1, 1, 'Module 6 Update', 'The project is being refined with role separation, professional styling, and communication tools.', '2026-06-12')
 """)
 
 cursor.execute("""
@@ -158,6 +182,30 @@ cursor.execute("""
 INSERT OR IGNORE INTO submissions (submission_id, assignment_id, student_id, submission_text, submission_date, status)
 VALUES
 (1, 1, 1, 'Initial topology report submitted for review.', '2026-06-05', 'Submitted')
+""")
+
+cursor.execute("""
+INSERT OR IGNORE INTO messages (
+    message_id,
+    sender_id,
+    sender_name,
+    sender_role,
+    recipient_role,
+    group_name,
+    message_type,
+    message_text,
+    sent_date
+)
+VALUES
+(1, 2, 'Instructor User', 'Instructor', 'All', 'COM-430 Class', 'Class Announcement', 'Welcome to the course message board. Please use this area for class updates and questions.', '2026-06-12')
+""")
+
+cursor.execute("""
+INSERT OR IGNORE INTO message_reads (user_id, last_seen_message_id)
+VALUES
+(1, 0),
+(2, 0),
+(3, 0)
 """)
 
 conn.commit()

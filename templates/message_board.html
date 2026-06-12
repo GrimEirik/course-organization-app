@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Message Board</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Message Board</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    <div class="hero-banner">
+        <h2>Course Communication Center</h2>
+        <p>Post class messages, ask questions, and communicate with instructors.</p>
+    </div>
+
+    <form method="POST" class="form-box">
+        <label>Recipient Role</label>
+        <select name="recipient_role" required>
+            <option value="All">All</option>
+            <option value="Student">Students</option>
+            <option value="Instructor">Instructor</option>
+        </select>
+
+        <label>Group Name</label>
+        <input type="text" name="group_name" value="COM-430 Class" required>
+
+        <label>Message Type</label>
+        <select name="message_type" required>
+            <option value="Class Message">Class Message</option>
+            <option value="Student Question">Student Question</option>
+            <option value="Instructor Reply">Instructor Reply</option>
+            <option value="Group Discussion">Group Discussion</option>
+            <option value="System Notice">System Notice</option>
+        </select>
+
+        <label>Message</label>
+        <textarea name="message_text" required></textarea>
+
+        <label>Sent Date</label>
+        <input type="date" name="sent_date" required>
+
+        <button type="submit">Post Message</button>
+    </form>
+
+    <h2>Message History</h2>
+
+    <section class="message-board">
+        {% for message in messages %}
+            <div class="message-card">
+                <h3>{{ message["sender_name"] }} — {{ message["sender_role"] }}</h3>
+                <p>{{ message["message_text"] }}</p>
+                <small>
+                    {{ message["sent_date"] }} |
+                    {{ message["message_type"] }} |
+                    To: {{ message["recipient_role"] }} |
+                    Group: {{ message["group_name"] }}
+                </small>
+            </div>
+        {% endfor %}
+    </section>
+</main>
+
+<footer>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('privacy') }}">Privacy Statement</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+</footer>
+
+</body>
+</html>

@@ -240,3 +240,74 @@ footer a:hover {
     margin-top: 0;
     color: #006747;
 }
+
+.notification-card {
+    position: relative;
+}
+
+.notification-badge {
+    display: inline-block;
+    background: #FDB515;
+    color: #1f2933;
+    padding: 6px 10px;
+    margin-top: 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.notification-clear {
+    display: inline-block;
+    background: #e9f2eb;
+    color: #006747;
+    padding: 6px 10px;
+    margin-top: 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.message-preview {
+    background: rgba(255,255,255,0.95);
+    max-width: 900px;
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 7px solid #006747;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.10);
+    margin-bottom: 30px;
+}
+
+.message-preview-item {
+    background: #f5f7f2;
+    padding: 14px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border-left: 5px solid #FDB515;
+}
+
+.message-preview-item small {
+    color: #555;
+}
+
+.message-board {
+    max-width: 950px;
+    margin-top: 25px;
+}
+
+.message-card {
+    background: rgba(255,255,255,0.96);
+    padding: 22px;
+    border-radius: 12px;
+    border-left: 7px solid #006747;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.10);
+    margin-bottom: 20px;
+}
+
+.message-card h3 {
+    margin-top: 0;
+    color: #006747;
+}
+
+.message-card small {
+    color: #555;
+}

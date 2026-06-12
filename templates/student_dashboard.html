@@ -20,6 +20,31 @@
     <h2>Welcome, {{ session["name"] }}</h2>
     <p>Role: {{ session["role"] }}</p>
 
+    <h3>Messages and Notifications</h3>
+    <section class="cards">
+        <a class="card notification-card" href="{{ url_for('message_board') }}">
+            Message Board
+            {% if unread_count > 0 %}
+                <span class="notification-badge">{{ unread_count }} New</span>
+            {% else %}
+                <span class="notification-clear">No New Messages</span>
+            {% endif %}
+        </a>
+    </section>
+
+    <section class="message-preview">
+        <h3>Recent Class Messages</h3>
+
+        {% for message in recent_messages %}
+            <div class="message-preview-item">
+                <strong>{{ message["sender_name"] }}:</strong>
+                {{ message["message_text"] }}
+                <br>
+                <small>{{ message["sent_date"] }} | {{ message["message_type"] }}</small>
+            </div>
+        {% endfor %}
+    </section>
+
     <h3>Course Information</h3>
     <section class="cards">
         <a class="card" href="{{ url_for('courses') }}">View Courses</a>

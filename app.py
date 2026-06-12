@@ -63,6 +63,60 @@ def count_records(table_name):
     return record["total"]
 
 
+def get_recent_messages(limit=3):
+    return fetch_all(
+        """
+        SELECT *
+        FROM messages
+        ORDER BY message_id DESC
+        LIMIT ?
+        """,
+        (limit,)
+    )
+
+
+def get_unread_message_count(user_id):
+    record = fetch_one(
+        """
+        SELECT last_seen_message_id
+        FROM message_reads
+        WHERE user_id = ?
+        """,
+        (user_id,)
+    )
+
+    last_seen = 0
+
+    if record:
+        last_seen = record["last_seen_message_id"]
+
+    count = fetch_one(
+        """
+        SELECT COUNT(*) AS total
+        FROM messages
+        WHERE message_id > ?
+        """,
+        (last_seen,)
+    )
+
+    return count["total"]
+
+
+def mark_messages_seen(user_id):
+    latest = fetch_one("SELECT MAX(message_id) AS latest_id FROM messages")
+    latest_id = latest["latest_id"] if latest and latest["latest_id"] else 0
+
+    execute_query(
+        """
+        INSERT INTO message_reads (user_id, last_seen_message_id)
+        VALUES (?, ?)
+        ON CONFLICT(user_id)
+        DO UPDATE SET last_seen_message_id = excluded.last_seen_message_id
+        """,
+        (user_id, latest_id)
+    )
+
+
 @app.route("/")
 def home():
     return redirect(url_for("login"))
@@ -97,16 +151,82 @@ def dashboard():
     if not login_required():
         return redirect(url_for("login"))
 
+    recent_messages = get_recent_messages()
+    unread_count = get_unread_message_count(session["user_id"])
+
     if session["role"] == "Student":
-        return render_template("student_dashboard.html")
+        return render_template(
+            "student_dashboard.html",
+            recent_messages=recent_messages,
+            unread_count=unread_count
+        )
 
     if session["role"] == "Instructor":
-        return render_template("instructor_dashboard.html")
+        return render_template(
+            "instructor_dashboard.html",
+            recent_messages=recent_messages,
+            unread_count=unread_count
+        )
 
     if session["role"] == "Administrator":
         return render_template("admin_dashboard.html")
 
     return redirect(url_for("login"))
+
+
+@app.route("/message-board", methods=["GET", "POST"])
+def message_board():
+    if not role_required("Student", "Instructor"):
+        return redirect(url_for("dashboard"))
+
+    if request.method == "POST":
+        execute_query(
+            """
+            INSERT INTO messages
+            (sender_id, sender_name, sender_role, recipient_role, group_name, message_type, message_text, sent_date)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                session["user_id"],
+                session["name"],
+                session["role"],
+                request.form["recipient_role"],
+                request.form["group_name"],
+                request.form["message_type"],
+                request.form["message_text"],
+                request.form["sent_date"]
+            )
+        )
+
+        return redirect(url_for("message_board"))
+
+    mark_messages_seen(session["user_id"])
+
+    messages = fetch_all(
+        """
+        SELECT *
+        FROM messages
+        ORDER BY message_id DESC
+        """
+    )
+
+    return render_template("message_board.html", messages=messages)
+
+
+@app.route("/admin-chat-log")
+def admin_chat_log():
+    if not admin_required():
+        return redirect(url_for("dashboard"))
+
+    messages = fetch_all(
+        """
+        SELECT *
+        FROM messages
+        ORDER BY message_id DESC
+        """
+    )
+
+    return render_template("admin_chat_log.html", messages=messages)
 
 
 @app.route("/admin-reports")
@@ -124,6 +244,7 @@ def admin_reports():
         "Total Announcements": count_records("announcements"),
         "Total Lesson Plans": count_records("lesson_plans"),
         "Total Learning Objectives": count_records("learning_objectives"),
+        "Total Messages": count_records("messages"),
     }
 
     return render_template("admin_reports.html", stats=stats)
@@ -145,6 +266,25 @@ def assignments():
 
     assignments = fetch_all("SELECT * FROM assignments")
     return render_template("assignments.html", assignments=assignments)
+
+
+@app.route("/calendar")
+def calendar():
+    if not login_required():
+        return redirect(url_for("login"))
+
+    calendar_items = fetch_all("""
+        SELECT
+            assignments.title,
+            assignments.due_date,
+            assignments.points_possible,
+            courses.course_name
+        FROM assignments
+        JOIN courses ON assignments.course_id = courses.course_id
+        ORDER BY assignments.due_date ASC
+    """)
+
+    return render_template("calendar.html", calendar_items=calendar_items)
 
 
 @app.route("/announcements")
@@ -502,6 +642,7 @@ def delete_user(user_id):
 
     return redirect(url_for("manage_users"))
 
+
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
@@ -516,23 +657,6 @@ def privacy():
 def about():
     return render_template("about.html")
 
-@app.route("/calendar")
-def calendar():
-    if not login_required():
-        return redirect(url_for("login"))
-
-    calendar_items = fetch_all("""
-        SELECT
-            assignments.title,
-            assignments.due_date,
-            assignments.points_possible,
-            courses.course_name
-        FROM assignments
-        JOIN courses ON assignments.course_id = courses.course_id
-        ORDER BY assignments.due_date ASC
-    """)
-
-    return render_template("calendar.html", calendar_items=calendar_items)
 
 @app.route("/logout")
 def logout():

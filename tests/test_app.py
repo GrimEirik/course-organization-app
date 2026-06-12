@@ -94,3 +94,14 @@ def test_calendar_requires_login():
     tester = app.test_client()
     response = tester.get("/calendar")
     assert response.status_code == 302
+
+def test_message_board_requires_login():
+    tester = app.test_client()
+    response = tester.get("/message-board")
+    assert response.status_code == 302
+
+
+def test_admin_chat_log_requires_admin_login():
+    tester = app.test_client()
+    response = tester.get("/admin-chat-log")
+    assert response.status_code == 302    
