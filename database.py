@@ -129,6 +129,18 @@ CREATE TABLE IF NOT EXISTS message_reads (
 """)
 
 cursor.execute("""
+CREATE TABLE IF NOT EXISTS calendar_events (
+    event_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    event_date TEXT NOT NULL,
+    event_type TEXT NOT NULL,
+    created_by INTEGER,
+    FOREIGN KEY(created_by) REFERENCES users(user_id)
+)
+""")
+
+cursor.execute("""
 INSERT OR IGNORE INTO users (user_id, name, email, password, role)
 VALUES
 (1, 'Student User', 'student@test.com', 'password', 'Student'),
@@ -151,7 +163,7 @@ VALUES
 cursor.execute("""
 INSERT OR IGNORE INTO announcements (announcement_id, course_id, title, message, post_date)
 VALUES
-(1, 1, 'Module 6 Update', 'The project is being refined with role separation, professional styling, and communication tools.', '2026-06-12')
+(1, 1, 'Module 6 Update', 'The project is being refined with role separation, professional styling, communication tools, and calendar functionality.', '2026-06-12')
 """)
 
 cursor.execute("""
@@ -206,6 +218,19 @@ VALUES
 (1, 0),
 (2, 0),
 (3, 0)
+""")
+
+cursor.execute("""
+INSERT OR IGNORE INTO calendar_events (
+    event_id,
+    title,
+    description,
+    event_date,
+    event_type,
+    created_by
+)
+VALUES
+(1, 'Instructor Office Hours', 'Optional support session for project questions.', '2026-06-12', 'Event / Reminder', 2)
 """)
 
 conn.commit()

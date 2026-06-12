@@ -273,10 +273,13 @@ def calendar():
     if not login_required():
         return redirect(url_for("login"))
 
-    calendar_items = fetch_all("""
+    selected_view = request.args.get("view", "month")
+
+    assignment_items = fetch_all("""
         SELECT
+            assignments.assignment_id,
             assignments.title,
-            assignments.due_date,
+            assignments.due_date AS event_date,
             assignments.points_possible,
             courses.course_name
         FROM assignments
@@ -284,7 +287,95 @@ def calendar():
         ORDER BY assignments.due_date ASC
     """)
 
-    return render_template("calendar.html", calendar_items=calendar_items)
+    manual_items = fetch_all("""
+        SELECT
+            calendar_events.event_id,
+            calendar_events.title,
+            calendar_events.description,
+            calendar_events.event_date,
+            calendar_events.event_type,
+            users.name AS created_by_name
+        FROM calendar_events
+        LEFT JOIN users ON calendar_events.created_by = users.user_id
+        ORDER BY calendar_events.event_date ASC
+    """)
+
+    calendar_events = {}
+
+    for item in assignment_items:
+        event_date = item["event_date"]
+
+        if event_date not in calendar_events:
+            calendar_events[event_date] = []
+
+        calendar_events[event_date].append({
+            "title": item["title"],
+            "description": item["course_name"],
+            "points_possible": item["points_possible"],
+            "event_type": "Assignment Due",
+            "source": "assignment",
+            "event_id": None
+        })
+
+    for item in manual_items:
+        event_date = item["event_date"]
+
+        if event_date not in calendar_events:
+            calendar_events[event_date] = []
+
+        calendar_events[event_date].append({
+            "title": item["title"],
+            "description": item["description"],
+            "points_possible": None,
+            "event_type": item["event_type"],
+            "source": "manual",
+            "event_id": item["event_id"]
+        })
+
+    return render_template(
+        "calendar.html",
+        calendar_events=calendar_events,
+        selected_view=selected_view
+    )
+
+
+@app.route("/add-calendar-event", methods=["GET", "POST"])
+def add_calendar_event():
+    if not instructor_required():
+        return redirect(url_for("dashboard"))
+
+    if request.method == "POST":
+        execute_query(
+            """
+            INSERT INTO calendar_events
+            (title, description, event_date, event_type, created_by)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                request.form["title"],
+                request.form["description"],
+                request.form["event_date"],
+                request.form["event_type"],
+                session["user_id"]
+            )
+        )
+
+        return redirect(url_for("calendar"))
+
+    return render_template("add_calendar_event.html")
+
+
+@app.route("/delete-calendar-event/<int:event_id>")
+def delete_calendar_event(event_id):
+    if not role_required("Instructor", "Administrator"):
+        return redirect(url_for("dashboard"))
+
+    execute_query(
+        "DELETE FROM calendar_events WHERE event_id = ?",
+        (event_id,)
+    )
+
+    return redirect(url_for("calendar"))
 
 
 @app.route("/announcements")

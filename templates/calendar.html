@@ -14,24 +14,185 @@
 <main>
     <div class="hero-banner">
         <h2>Course Assignment Calendar</h2>
-        <p>Upcoming assignment due dates are automatically populated from instructor-created assignments.</p>
+        <p>Assignments are automatically added, and instructors can add reminders or course events.</p>
     </div>
 
-    <section class="calendar-list">
-        {% for item in calendar_items %}
-            <div class="calendar-item">
-                <div class="calendar-date">
-                    {{ item["due_date"] }}
-                </div>
+    <div class="calendar-toolbar">
+        <a class="calendar-action" href="{{ url_for('calendar', view='month') }}">Month</a>
+        <a class="calendar-action" href="{{ url_for('calendar', view='week') }}">Week</a>
+        <a class="calendar-action" href="{{ url_for('calendar', view='list') }}">List</a>
 
-                <div class="calendar-details">
-                    <h2>{{ item["title"] }}</h2>
-                    <p><strong>Course:</strong> {{ item["course_name"] }}</p>
-                    <p><strong>Points Possible:</strong> {{ item["points_possible"] }}</p>
+        {% if session["role"] == "Instructor" %}
+            <a class="calendar-action add-event-button" href="{{ url_for('add_calendar_event') }}">Add Event</a>
+        {% endif %}
+    </div>
+
+    {% if selected_view == "month" %}
+        <section class="month-calendar">
+            <div class="calendar-header">Sunday</div>
+            <div class="calendar-header">Monday</div>
+            <div class="calendar-header">Tuesday</div>
+            <div class="calendar-header">Wednesday</div>
+            <div class="calendar-header">Thursday</div>
+            <div class="calendar-header">Friday</div>
+            <div class="calendar-header">Saturday</div>
+
+            {% set calendar_days = [
+                ("May 31", "2026-05-31"),
+                ("Jun 1", "2026-06-01"),
+                ("2", "2026-06-02"),
+                ("3", "2026-06-03"),
+                ("4", "2026-06-04"),
+                ("5", "2026-06-05"),
+                ("6", "2026-06-06"),
+
+                ("7", "2026-06-07"),
+                ("8", "2026-06-08"),
+                ("9", "2026-06-09"),
+                ("10", "2026-06-10"),
+                ("11", "2026-06-11"),
+                ("12", "2026-06-12"),
+                ("13", "2026-06-13"),
+
+                ("14", "2026-06-14"),
+                ("15", "2026-06-15"),
+                ("16", "2026-06-16"),
+                ("17", "2026-06-17"),
+                ("18", "2026-06-18"),
+                ("19", "2026-06-19"),
+                ("20", "2026-06-20"),
+
+                ("21", "2026-06-21"),
+                ("22", "2026-06-22"),
+                ("23", "2026-06-23"),
+                ("24", "2026-06-24"),
+                ("25", "2026-06-25"),
+                ("26", "2026-06-26"),
+                ("27", "2026-06-27"),
+
+                ("28", "2026-06-28"),
+                ("29", "2026-06-29"),
+                ("30", "2026-06-30"),
+                ("Jul 1", "2026-07-01"),
+                ("2", "2026-07-02"),
+                ("3", "2026-07-03"),
+                ("4", "2026-07-04")
+            ] %}
+
+            {% for day_label, date_value in calendar_days %}
+                <div class="calendar-cell {% if date_value == '2026-06-12' %}today-cell{% endif %}">
+                    <div class="calendar-day-number">{{ day_label }}</div>
+
+                    {% if date_value in calendar_events %}
+                        {% for event in calendar_events[date_value] %}
+                            <div class="calendar-event {% if event['event_type'] == 'Assignment Due' %}assignment-event{% else %}manual-event{% endif %}">
+                                <strong>{{ event["title"] }}</strong>
+                                <br>
+                                <small>{{ event["event_type"] }}</small>
+                                <br>
+                                <small>{{ event["description"] }}</small>
+
+                                {% if event["points_possible"] %}
+                                    <br>
+                                    <small>{{ event["points_possible"] }} pts</small>
+                                {% endif %}
+
+                                {% if event["source"] == "manual" and session["role"] in ["Instructor", "Administrator"] %}
+                                    <br>
+                                    <a class="delete-link" href="{{ url_for('delete_calendar_event', event_id=event['event_id']) }}">Delete</a>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if date_value == "2026-06-19" %}
+                        <div class="calendar-event holiday-event">
+                            Juneteenth Holiday
+                        </div>
+                    {% endif %}
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    {% if selected_view == "week" %}
+        <section class="week-calendar">
+            <h2>Week View: June 7 - June 13, 2026</h2>
+
+            {% set week_days = [
+                ("Sunday", "2026-06-07"),
+                ("Monday", "2026-06-08"),
+                ("Tuesday", "2026-06-09"),
+                ("Wednesday", "2026-06-10"),
+                ("Thursday", "2026-06-11"),
+                ("Friday", "2026-06-12"),
+                ("Saturday", "2026-06-13")
+            ] %}
+
+            {% for day_name, date_value in week_days %}
+                <div class="week-day-card">
+                    <h3>{{ day_name }} — {{ date_value }}</h3>
+
+                    {% if date_value in calendar_events %}
+                        {% for event in calendar_events[date_value] %}
+                            <div class="calendar-event {% if event['event_type'] == 'Assignment Due' %}assignment-event{% else %}manual-event{% endif %}">
+                                <strong>{{ event["title"] }}</strong>
+                                <p>{{ event["description"] }}</p>
+                                <small>{{ event["event_type"] }}</small>
+
+                                {% if event["source"] == "manual" and session["role"] in ["Instructor", "Administrator"] %}
+                                    <br>
+                                    <a class="delete-link" href="{{ url_for('delete_calendar_event', event_id=event['event_id']) }}">Delete</a>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No events scheduled.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    {% if selected_view == "list" %}
+        <section class="calendar-list-view">
+            <h2>Calendar List View</h2>
+
+            {% for date_value, events in calendar_events.items() %}
+                <div class="calendar-list-date">
+                    <h3>{{ date_value }}</h3>
+
+                    {% for event in events %}
+                        <div class="calendar-event {% if event['event_type'] == 'Assignment Due' %}assignment-event{% else %}manual-event{% endif %}">
+                            <strong>{{ event["title"] }}</strong>
+                            <p>{{ event["description"] }}</p>
+                            <small>{{ event["event_type"] }}</small>
+
+                            {% if event["points_possible"] %}
+                                <br>
+                                <small>{{ event["points_possible"] }} pts</small>
+                            {% endif %}
+
+                            {% if event["source"] == "manual" and session["role"] in ["Instructor", "Administrator"] %}
+                                <br>
+                                <a class="delete-link" href="{{ url_for('delete_calendar_event', event_id=event['event_id']) }}">Delete</a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    <section class="calendar-legend">
+        <span><span class="legend-box assignment-color"></span> Assignment Due</span>
+        <span><span class="legend-box manual-color"></span> Instructor Event / Reminder</span>
+        <span><span class="legend-box holiday-color"></span> Holiday / No Class</span>
     </section>
+
+    <div class="calendar-note">
+        <strong>Note:</strong> Assignment due dates come from instructor-created assignments. Manual events can be added by instructors.
+    </div>
 </main>
 
 <footer>

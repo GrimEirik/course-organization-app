@@ -105,3 +105,9 @@ def test_admin_chat_log_requires_admin_login():
     tester = app.test_client()
     response = tester.get("/admin-chat-log")
     assert response.status_code == 302    
+
+
+def test_add_calendar_event_requires_login():
+    tester = app.test_client()
+    response = tester.get("/add-calendar-event")
+    assert response.status_code == 302    

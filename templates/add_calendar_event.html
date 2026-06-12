@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Calendar Event</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Add Calendar Event</h1>
+    <a href="{{ url_for('calendar') }}">Back to Calendar</a>
+</header>
+
+<main>
+    <div class="hero-banner">
+        <h2>Create Calendar Event</h2>
+        <p>Add reminders, course events, study sessions, or class schedule notes.</p>
+    </div>
+
+    <form method="POST" class="form-box">
+        <label>Event Title</label>
+        <input type="text" name="title" required>
+
+        <label>Description</label>
+        <textarea name="description" required></textarea>
+
+        <label>Event Date</label>
+        <input type="date" name="event_date" required>
+
+        <label>Event Type</label>
+        <select name="event_type" required>
+            <option value="Event / Reminder">Event / Reminder</option>
+            <option value="Study Session">Study Session</option>
+            <option value="Office Hours">Office Hours</option>
+            <option value="No Class">No Class</option>
+            <option value="Exam">Exam</option>
+        </select>
+
+        <button type="submit">Add Calendar Event</button>
+    </form>
+</main>
+
+<footer>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('privacy') }}">Privacy Statement</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+</footer>
+
+</body>
+</html>
