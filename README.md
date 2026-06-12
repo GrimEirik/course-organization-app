@@ -1,263 +1,89 @@
-# Course Organization Application
+# Course Organization & Management Application
 
 ## COM-430 Software Engineering Project
 
-### Team Members
+This project is a web-based Course Organization & Management Application built for COM-430 Software Engineering. The application supports students, instructors, and administrators through separate role-based dashboards.
 
-* Steven Runion
-* [Add Additional Team Members Here]
+The system includes course management, assignments, assignment submissions, grading, feedback, announcements, lesson plans, learning objectives, a calendar system, message board, message notifications, administrative reports, and user management.
 
 ---
 
-# Project Overview
+# Technology Stack
 
-The Course Organization Application is a web-based Learning Management System (LMS) prototype developed using:
+This application uses:
 
-* Python 3
+* Python
 * Flask
 * SQLite
-* HTML/CSS
+* HTML
+* CSS
+* Git
 * GitHub
-* Jenkins
 * Pytest
-
-The application provides role-based access for:
-
-### Student
-
-* View Courses
-* View Assignments
-* Submit Assignments
-* View Announcements
-* View Grades
-* View Feedback
-* View Lesson Plans
-* View Learning Objectives
-
-### Instructor
-
-* Create Courses
-* Create Assignments
-* Post Announcements
-* Enter Grades
-* Provide Feedback
-* Create Lesson Plans
-* Create Learning Objectives
-* View Student Submissions
-
-### Administrator
-
-* View Courses
-* View Assignments
-* View Submissions
-* View Grades
-* View Feedback
-* View Lesson Plans
-* View Learning Objectives
+* Jenkins
 
 ---
 
-# Repository
+# Main Features
 
-Clone the repository:
+## Student Features
 
-```bash
-git clone https://github.com/GrimEirik/course-organization-app.git
-```
+Students can:
 
-Enter the project directory:
+* Log in to the student dashboard
+* View courses
+* View assignments
+* Submit assignments
+* View grades
+* View instructor feedback
+* View announcements
+* View lesson plans
+* View learning objectives
+* View assignment calendar
+* Use the message board
+* See unread message notifications
 
-```bash
-cd course-organization-app
-```
+## Instructor Features
 
----
+Instructors can:
 
-# Windows Installation Guide
+* Log in to the instructor dashboard
+* Create courses
+* Create assignments
+* Post announcements
+* Create lesson plans
+* Create learning objectives
+* Review student submissions
+* Enter grades
+* Provide feedback
+* Add calendar events
+* Use the message board
+* View unread message notifications
 
-## Step 1: Install Python
+## Administrator Features
 
-Download and install Python 3.12 or newer:
+Administrators can:
 
-https://www.python.org/downloads/
-
-During installation:
-
-✓ Check "Add Python to PATH"
-
-Verify installation:
-
-```bash
-python --version
-```
-
-Expected output:
-
-```text
-Python 3.12.x
-```
-
----
-
-## Step 2: Create Virtual Environment
-
-Inside the project folder:
-
-```bash
-python -m venv venv
-```
-
----
-
-## Step 3: Activate Virtual Environment
-
-Command Prompt:
-
-```bash
-venv\Scripts\activate
-```
-
-Git Bash:
-
-```bash
-source venv/Scripts/activate
-```
-
-Expected:
-
-```text
-(venv)
-```
-
-appears at the beginning of the terminal prompt.
+* Log in to the administrator dashboard
+* Manage users
+* View system reports
+* Audit courses
+* Audit assignments
+* Audit submissions
+* Audit grades
+* Audit feedback
+* Audit lesson plans
+* Audit learning objectives
+* Audit announcements
+* View chat/message logs
 
 ---
 
-## Step 4: Install Dependencies
+# Demo Login Accounts
 
-```bash
-pip install -r requirements.txt
-```
+Use these accounts after the application is running.
 
----
-
-## Step 5: Build Database
-
-```bash
-python database.py
-```
-
-Expected:
-
-```text
-Database initialized successfully.
-```
-
----
-
-## Step 6: Run Application
-
-```bash
-python app.py
-```
-
-Expected:
-
-```text
-Running on http://127.0.0.1:5000
-```
-
-Open:
-
-http://127.0.0.1:5000
-
----
-
-# macOS Installation Guide
-
-## Step 1: Verify Python
-
-Open Terminal:
-
-```bash
-python3 --version
-```
-
-If Python is missing:
-
-https://www.python.org/downloads/macos/
-
----
-
-## Step 2: Create Virtual Environment
-
-Inside the project directory:
-
-```bash
-python3 -m venv venv
-```
-
----
-
-## Step 3: Activate Virtual Environment
-
-```bash
-source venv/bin/activate
-```
-
-Expected:
-
-```text
-(venv)
-```
-
-appears at the beginning of the terminal prompt.
-
----
-
-## Step 4: Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-If needed:
-
-```bash
-pip3 install -r requirements.txt
-```
-
----
-
-## Step 5: Build Database
-
-```bash
-python3 database.py
-```
-
-Expected:
-
-```text
-Database initialized successfully.
-```
-
----
-
-## Step 6: Run Application
-
-```bash
-python3 app.py
-```
-
-Open:
-
-http://127.0.0.1:5000
-
----
-
-# Test Accounts
-
-## Student
+## Student Account
 
 Email:
 
@@ -271,9 +97,7 @@ Password:
 password
 ```
 
----
-
-## Instructor
+## Instructor Account
 
 Email:
 
@@ -287,9 +111,7 @@ Password:
 password
 ```
 
----
-
-## Administrator
+## Administrator Account
 
 Email:
 
@@ -305,7 +127,285 @@ password
 
 ---
 
+# Repository Setup
+
+## Step 1: Clone the Repository
+
+Open a terminal or command prompt and run:
+
+```bash
+git clone https://github.com/GrimEirik/course-organization-app.git
+```
+
+Move into the project folder:
+
+```bash
+cd course-organization-app
+```
+
+---
+
+# Windows Setup Instructions
+
+These steps are for Windows users using Command Prompt, PowerShell, or Git Bash.
+
+## Step 1: Install Python
+
+Download Python from:
+
+```text
+https://www.python.org/downloads/
+```
+
+During installation, make sure to check:
+
+```text
+Add Python to PATH
+```
+
+Verify Python installed correctly:
+
+```bash
+python --version
+```
+
+Expected result:
+
+```text
+Python 3.12.x
+```
+
+or newer.
+
+---
+
+## Step 2: Create a Virtual Environment
+
+From inside the project folder, run:
+
+```bash
+python -m venv venv
+```
+
+This creates a local Python environment named:
+
+```text
+venv
+```
+
+---
+
+## Step 3: Activate the Virtual Environment
+
+### Command Prompt
+
+```bash
+venv\Scripts\activate
+```
+
+### PowerShell
+
+```bash
+venv\Scripts\Activate.ps1
+```
+
+If PowerShell blocks activation, run:
+
+```bash
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Then try again:
+
+```bash
+venv\Scripts\Activate.ps1
+```
+
+### Git Bash
+
+Most Windows virtual environments use:
+
+```bash
+source venv/Scripts/activate
+```
+
+Some Git Bash environments may use:
+
+```bash
+source venv/bin/activate
+```
+
+If one does not work, try the other.
+
+After activation, the terminal should show:
+
+```text
+(venv)
+```
+
+or:
+
+```text
+((venv))
+```
+
+---
+
+## Step 4: Install Required Packages
+
+Run:
+
+```bash
+pip install -r requirements.txt
+```
+
+This installs Flask, pytest, and other required packages.
+
+---
+
+## Step 5: Initialize the Database
+
+Run:
+
+```bash
+python database.py
+```
+
+Expected output:
+
+```text
+Database initialized successfully.
+```
+
+This creates the SQLite database file inside the `database` folder.
+
+---
+
+## Step 6: Run the Application
+
+Run:
+
+```bash
+python app.py
+```
+
+Expected output:
+
+```text
+Running on http://127.0.0.1:5000
+```
+
+Open a browser and go to:
+
+```text
+http://127.0.0.1:5000
+```
+
+---
+
+# macOS Setup Instructions
+
+These steps are for macOS users using Terminal.
+
+## Step 1: Install Python
+
+Check if Python 3 is installed:
+
+```bash
+python3 --version
+```
+
+If Python is not installed, download it from:
+
+```text
+https://www.python.org/downloads/macos/
+```
+
+---
+
+## Step 2: Clone the Repository
+
+```bash
+git clone https://github.com/GrimEirik/course-organization-app.git
+```
+
+Move into the project folder:
+
+```bash
+cd course-organization-app
+```
+
+---
+
+## Step 3: Create a Virtual Environment
+
+```bash
+python3 -m venv venv
+```
+
+---
+
+## Step 4: Activate the Virtual Environment
+
+```bash
+source venv/bin/activate
+```
+
+The terminal should now show:
+
+```text
+(venv)
+```
+
+---
+
+## Step 5: Install Required Packages
+
+```bash
+pip install -r requirements.txt
+```
+
+If needed, use:
+
+```bash
+pip3 install -r requirements.txt
+```
+
+---
+
+## Step 6: Initialize the Database
+
+```bash
+python3 database.py
+```
+
+Expected output:
+
+```text
+Database initialized successfully.
+```
+
+---
+
+## Step 7: Run the Application
+
+```bash
+python3 app.py
+```
+
+Open a browser and go to:
+
+```text
+http://127.0.0.1:5000
+```
+
+---
+
 # Running Automated Tests
+
+The project uses pytest for automated testing.
+
+Make sure the virtual environment is activated first.
 
 Run:
 
@@ -313,37 +413,169 @@ Run:
 pytest
 ```
 
-Expected:
+Expected result:
 
 ```text
-12 passed
+tests passed
 ```
 
-(or higher depending on future development)
+The exact number of tests may increase as the project grows.
 
 ---
 
-# Jenkins Pipeline
+# Common Issues and Fixes
 
-The Jenkins pipeline performs:
+## Problem: No module named Flask
 
-1. Checkout Source Code
-2. Install Dependencies
-3. Initialize Database
-4. Run Automated Tests
-5. Validate Build
+This means the virtual environment is not activated or dependencies were not installed.
 
-Expected Jenkins result:
+Fix:
 
-```text
-Finished: SUCCESS
+```bash
+pip install -r requirements.txt
+```
+
+Then run:
+
+```bash
+python app.py
+```
+
+If using Git Bash, make sure the correct virtual environment is active:
+
+```bash
+source venv/bin/activate
+```
+
+or:
+
+```bash
+source venv/Scripts/activate
 ```
 
 ---
 
-# Git Workflow
+## Problem: Database Table Does Not Exist
 
-Create a feature branch:
+This usually means the database was not initialized after code changes.
+
+Fix:
+
+```bash
+python database.py
+```
+
+If the error continues, delete the old database file:
+
+```text
+database/course_app.db
+```
+
+Then run:
+
+```bash
+python database.py
+```
+
+---
+
+## Problem: Port Already in Use
+
+If Flask says port 5000 is already in use, another copy of the application may still be running.
+
+Stop the running Flask server with:
+
+```text
+CTRL + C
+```
+
+Then restart:
+
+```bash
+python app.py
+```
+
+---
+
+## Problem: Git Bash Uses the Wrong Python
+
+If Git Bash uses the wrong Python, run:
+
+```bash
+which python
+```
+
+If it points to MSYS or another Python installation, activate the virtual environment:
+
+```bash
+source venv/bin/activate
+```
+
+or run the app directly with:
+
+```bash
+venv/bin/python app.py
+```
+
+---
+
+# Project Folder Structure
+
+The project is organized as follows:
+
+```text
+course-organization-app/
+│
+├── app.py
+├── database.py
+├── requirements.txt
+├── README.md
+├── Jenkinsfile
+│
+├── database/
+│   └── course_app.db
+│
+├── static/
+│   └── style.css
+│
+├── templates/
+│   ├── login.html
+│   ├── student_dashboard.html
+│   ├── instructor_dashboard.html
+│   ├── admin_dashboard.html
+│   ├── courses.html
+│   ├── assignments.html
+│   ├── submissions.html
+│   ├── grades.html
+│   ├── feedback.html
+│   ├── announcements.html
+│   ├── lesson_plans.html
+│   ├── learning_objectives.html
+│   ├── calendar.html
+│   ├── message_board.html
+│   ├── admin_chat_log.html
+│   ├── admin_reports.html
+│   ├── contact.html
+│   ├── privacy.html
+│   └── about.html
+│
+└── tests/
+    └── test_app.py
+```
+
+---
+
+# Development Workflow
+
+For team members contributing to the project:
+
+## Step 1: Pull the Latest Code
+
+```bash
+git pull
+```
+
+## Step 2: Create a Feature Branch
 
 ```bash
 git checkout -b feature-name
@@ -352,122 +584,125 @@ git checkout -b feature-name
 Example:
 
 ```bash
-git checkout -b feature-student-submissions
+git checkout -b calendar-improvements
 ```
 
-Commit changes:
+## Step 3: Make Changes
+
+Edit the needed files.
+
+## Step 4: Run Tests
+
+```bash
+pytest
+```
+
+## Step 5: Commit Changes
 
 ```bash
 git add .
-git commit -m "Describe your changes"
+git commit -m "Describe the change made"
 ```
 
-Push branch:
+## Step 6: Push the Branch
 
 ```bash
 git push origin feature-name
 ```
 
-Create a Pull Request in GitHub for review.
+## Step 7: Create a Pull Request
 
-Do not commit directly to the main branch.
-
----
-
-# Common Troubleshooting
-
-## Flask Not Found
-
-Activate virtual environment:
-
-Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-macOS:
-
-```bash
-source venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
+Open GitHub and create a pull request into the main branch.
 
 ---
 
-## Database Error
+# Jenkins Pipeline
 
-Delete:
+This project includes a Jenkins pipeline using the `Jenkinsfile`.
+
+The pipeline performs:
+
+1. Pull latest code from GitHub
+2. Install dependencies
+3. Initialize the database
+4. Run automated tests
+5. Report build success or failure
+
+A successful Jenkins build should show:
 
 ```text
-database/course_app.db
-```
-
-Then rebuild:
-
-```bash
-python database.py
+Finished: SUCCESS
 ```
 
 ---
 
-## Port Already In Use
+# Application Workflow Summary
 
-Stop the running Flask process or restart the terminal.
-
----
-
-# Project Architecture
+## Student Workflow
 
 ```text
-User
-  ↓
-Flask Web Application
-  ↓
-SQLite Database
-  ↓
-GitHub Repository
-  ↓
-Jenkins CI/CD Pipeline
+Login
+↓
+Student Dashboard
+↓
+View Courses / Assignments / Calendar
+↓
+Submit Assignment
+↓
+View Grades and Feedback
+↓
+Use Message Board
+```
+
+## Instructor Workflow
+
+```text
+Login
+↓
+Instructor Dashboard
+↓
+Create Course Content
+↓
+Create Assignments
+↓
+Add Calendar Events
+↓
+Review Submissions
+↓
+Enter Grades and Feedback
+↓
+Communicate Through Message Board
+```
+
+## Administrator Workflow
+
+```text
+Login
+↓
+Administrator Dashboard
+↓
+Manage Users
+↓
+View System Reports
+↓
+Audit Records
+↓
+Review Chat Log
 ```
 
 ---
 
-# Current Features
+# Notes
 
-✓ Authentication
+This application is a student project prototype. It is intended for educational use and should not be used with real student records or sensitive personal data.
 
-✓ Student Dashboard
+For production use, future improvements should include:
 
-✓ Instructor Dashboard
-
-✓ Administrator Dashboard
-
-✓ Course Management
-
-✓ Assignment Management
-
-✓ Assignment Submission System
-
-✓ Grade Tracking
-
-✓ Feedback System
-
-✓ Lesson Plans
-
-✓ Learning Objectives
-
-✓ Announcements
-
-✓ SQLite Database
-
-✓ Automated Testing
-
-✓ Jenkins Continuous Integration
-
-✓ GitHub Source Control
+* Password hashing
+* Stronger input validation
+* Better session security
+* Database migration tools
+* Cloud deployment
+* User enrollment management
+* File uploads
+* Full audit logging
