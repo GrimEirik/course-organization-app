@@ -77,3 +77,15 @@ def test_submissions_requires_instructor_or_admin_login():
     tester = app.test_client()
     response = tester.get("/submissions")
     assert response.status_code == 302
+
+
+def test_admin_reports_requires_admin_login():
+    tester = app.test_client()
+    response = tester.get("/admin-reports")
+    assert response.status_code == 302
+
+
+def test_manage_users_requires_admin_login():
+    tester = app.test_client()
+    response = tester.get("/manage-users")
+    assert response.status_code == 302

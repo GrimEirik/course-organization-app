@@ -44,11 +44,23 @@ def fetch_all(query, params=()):
     return records
 
 
+def fetch_one(query, params=()):
+    conn = get_db_connection()
+    record = conn.execute(query, params).fetchone()
+    conn.close()
+    return record
+
+
 def execute_query(query, params=()):
     conn = get_db_connection()
     conn.execute(query, params)
     conn.commit()
     conn.close()
+
+
+def count_records(table_name):
+    record = fetch_one(f"SELECT COUNT(*) AS total FROM {table_name}")
+    return record["total"]
 
 
 @app.route("/")
@@ -95,6 +107,26 @@ def dashboard():
         return render_template("admin_dashboard.html")
 
     return redirect(url_for("login"))
+
+
+@app.route("/admin-reports")
+def admin_reports():
+    if not admin_required():
+        return redirect(url_for("dashboard"))
+
+    stats = {
+        "Total Users": count_records("users"),
+        "Total Courses": count_records("courses"),
+        "Total Assignments": count_records("assignments"),
+        "Total Submissions": count_records("submissions"),
+        "Total Grades": count_records("grades"),
+        "Total Feedback Records": count_records("feedback"),
+        "Total Announcements": count_records("announcements"),
+        "Total Lesson Plans": count_records("lesson_plans"),
+        "Total Learning Objectives": count_records("learning_objectives"),
+    }
+
+    return render_template("admin_reports.html", stats=stats)
 
 
 @app.route("/courses")
