@@ -135,3 +135,34 @@ button:hover {
     margin-top: 10px;
     box-sizing: border-box;
 }
+.business-panel {
+    background: white;
+    max-width: 900px;
+    padding: 30px;
+    border-radius: 8px;
+    border-left: 6px solid #2c3e50;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    line-height: 1.6;
+}
+
+.business-panel h2 {
+    margin-top: 0;
+}
+
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background: #2c3e50;
+    text-align: center;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}

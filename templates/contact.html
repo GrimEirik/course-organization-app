@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Information</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Contact Information</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    <div class="business-panel">
+        <h2>Course Organization Application Support</h2>
+
+        <p><strong>Project Team:</strong> COM-430 Software Engineering Team</p>
+        <p><strong>Primary Contacts:</strong> Steven Runion / Leon Miller / Michelle Williams</p>
+        <p><strong>Email:</strong> student-support@example.com</p>
+        <p><strong>Support Hours:</strong> Monday - Friday, 8:00 AM - 5:00 PM EST</p>
+
+        <p>
+            For application support, users should contact the project team with a clear
+            description of the issue, the user role being used, and the page where the
+            problem occurred.
+        </p>
+    </div>
+</main>
+
+<footer>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('privacy') }}">Privacy Statement</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+</footer>
+
+</body>
+</html>

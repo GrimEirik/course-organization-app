@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Privacy Statement</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Privacy Statement</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    <div class="business-panel">
+        <h2>Application Privacy Statement</h2>
+
+        <p>
+            This Course Organization Application is a student-developed academic project
+            created for COM-430 Software Engineering. The application is intended for
+            demonstration, testing, and educational purposes only.
+        </p>
+
+        <p>
+            The system stores basic user information, course information, assignments,
+            submissions, grades, feedback, lesson plans, learning objectives, and
+            announcements in a local SQLite database.
+        </p>
+
+        <p>
+            No real student records, protected education records, financial information,
+            medical information, or sensitive personal information should be entered into
+            this prototype system.
+        </p>
+
+        <p>
+            In a production environment, additional protections would be required,
+            including encrypted passwords, secure authentication, role-based authorization,
+            audit logging, encrypted database storage, and compliance review.
+        </p>
+    </div>
+</main>
+
+<footer>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('privacy') }}">Privacy Statement</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+</footer>
+
+</body>
+</html>
