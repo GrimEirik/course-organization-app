@@ -516,6 +516,24 @@ def privacy():
 def about():
     return render_template("about.html")
 
+@app.route("/calendar")
+def calendar():
+    if not login_required():
+        return redirect(url_for("login"))
+
+    calendar_items = fetch_all("""
+        SELECT
+            assignments.title,
+            assignments.due_date,
+            assignments.points_possible,
+            courses.course_name
+        FROM assignments
+        JOIN courses ON assignments.course_id = courses.course_id
+        ORDER BY assignments.due_date ASC
+    """)
+
+    return render_template("calendar.html", calendar_items=calendar_items)
+
 @app.route("/logout")
 def logout():
     session.clear()

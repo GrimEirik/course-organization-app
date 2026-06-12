@@ -12,6 +12,11 @@
 </header>
 
 <main>
+    <div class="hero-banner">
+        <h2>Saint Leo University</h2>
+        <p>Course Organization & Management System</p>
+    </div>
+
     <h2>Welcome, {{ session["name"] }}</h2>
     <p>Role: {{ session["role"] }}</p>
 
@@ -21,6 +26,7 @@
         <a class="card" href="{{ url_for('lesson_plans') }}">View Lesson Plans</a>
         <a class="card" href="{{ url_for('learning_objectives') }}">View Learning Objectives</a>
         <a class="card" href="{{ url_for('announcements') }}">View Announcements</a>
+        <a class="card" href="{{ url_for('calendar') }}">Assignment Calendar</a>
     </section>
 
     <h3>Assignments</h3>
@@ -35,6 +41,7 @@
         <a class="card" href="{{ url_for('feedback') }}">View Feedback</a>
     </section>
 </main>
+
 <footer>
     <a href="{{ url_for('about') }}">About</a>
     <a href="{{ url_for('privacy') }}">Privacy Statement</a>

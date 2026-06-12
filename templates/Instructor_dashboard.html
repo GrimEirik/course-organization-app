@@ -12,6 +12,11 @@
 </header>
 
 <main>
+    <div class="hero-banner">
+        <h2>Instructor Workspace</h2>
+        <p>Create course content, review student work, and manage academic progress.</p>
+    </div>
+
     <h2>Welcome, {{ session["name"] }}</h2>
     <p>Role: {{ session["role"] }}</p>
 
@@ -22,6 +27,7 @@
         <a class="card" href="{{ url_for('create_lesson_plan') }}">Create Lesson Plan</a>
         <a class="card" href="{{ url_for('create_learning_objective') }}">Create Learning Objective</a>
         <a class="card" href="{{ url_for('post_announcement') }}">Post Announcement</a>
+        <a class="card" href="{{ url_for('calendar') }}">Assignment Calendar</a>
     </section>
 
     <h3>Student Evaluation</h3>
@@ -40,6 +46,7 @@
         <a class="card" href="{{ url_for('announcements') }}">View Announcements</a>
     </section>
 </main>
+
 <footer>
     <a href="{{ url_for('about') }}">About</a>
     <a href="{{ url_for('privacy') }}">Privacy Statement</a>

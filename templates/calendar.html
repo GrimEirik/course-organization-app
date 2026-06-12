@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assignment Calendar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Assignment Calendar</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+    <div class="hero-banner">
+        <h2>Course Assignment Calendar</h2>
+        <p>Upcoming assignment due dates are automatically populated from instructor-created assignments.</p>
+    </div>
+
+    <section class="calendar-list">
+        {% for item in calendar_items %}
+            <div class="calendar-item">
+                <div class="calendar-date">
+                    {{ item["due_date"] }}
+                </div>
+
+                <div class="calendar-details">
+                    <h2>{{ item["title"] }}</h2>
+                    <p><strong>Course:</strong> {{ item["course_name"] }}</p>
+                    <p><strong>Points Possible:</strong> {{ item["points_possible"] }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+</main>
+
+<footer>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('privacy') }}">Privacy Statement</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+</footer>
+
+</body>
+</html>
