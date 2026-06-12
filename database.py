@@ -127,7 +127,7 @@ VALUES
 cursor.execute("""
 INSERT OR IGNORE INTO announcements (announcement_id, course_id, title, message, post_date)
 VALUES
-(1, 1, 'Module 5 Update', 'Begin expanding the application shell and preparing for testing.', '2026-06-05')
+(1, 1, 'Module 6 Update', 'The project is being refined for role separation, testing, and code organization.', '2026-06-12')
 """)
 
 cursor.execute("""
@@ -145,13 +145,13 @@ VALUES
 cursor.execute("""
 INSERT OR IGNORE INTO lesson_plans (lesson_plan_id, course_id, title, content, upload_date)
 VALUES
-(1, 1, 'Module 5 DevOps Lesson Plan', 'Review Jenkins, GitHub, Flask, SQLite, automated testing, and deployment flow.', '2026-06-05')
+(1, 1, 'Module 6 Role Separation Lesson Plan', 'Review role-based access, admin responsibilities, instructor responsibilities, and test-stage promotion.', '2026-06-12')
 """)
 
 cursor.execute("""
 INSERT OR IGNORE INTO learning_objectives (objective_id, course_id, description)
 VALUES
-(1, 1, 'Demonstrate a working DevOps pipeline using GitHub, Jenkins, Flask, SQLite, and pytest.')
+(1, 1, 'Demonstrate role-based system design using student, instructor, and administrator dashboards.')
 """)
 
 cursor.execute("""

@@ -15,15 +15,21 @@
     <h2>Welcome, {{ session["name"] }}</h2>
     <p>Role: {{ session["role"] }}</p>
 
+    <h3>System Administration</h3>
     <section class="cards">
-        <a class="card" href="{{ url_for('courses') }}">Manage Courses</a>
-        <a class="card" href="{{ url_for('assignments') }}">View Assignments</a>
-        <a class="card" href="{{ url_for('submissions') }}">View Submissions</a>
-        <a class="card" href="{{ url_for('grades') }}">View Grade Records</a>
-        <a class="card" href="{{ url_for('announcements') }}">View Announcements</a>
-        <a class="card" href="{{ url_for('feedback') }}">View Feedback Records</a>
-        <a class="card" href="{{ url_for('lesson_plans') }}">View Lesson Plans</a>
-        <a class="card" href="{{ url_for('learning_objectives') }}">View Learning Objectives</a>
+        <a class="card" href="{{ url_for('manage_users') }}">Manage Users</a>
+    </section>
+
+    <h3>System Oversight</h3>
+    <section class="cards">
+        <a class="card" href="{{ url_for('courses') }}">Audit Courses</a>
+        <a class="card" href="{{ url_for('assignments') }}">Audit Assignments</a>
+        <a class="card" href="{{ url_for('submissions') }}">Audit Submissions</a>
+        <a class="card" href="{{ url_for('grades') }}">Audit Grades</a>
+        <a class="card" href="{{ url_for('feedback') }}">Audit Feedback</a>
+        <a class="card" href="{{ url_for('lesson_plans') }}">Audit Lesson Plans</a>
+        <a class="card" href="{{ url_for('learning_objectives') }}">Audit Learning Objectives</a>
+        <a class="card" href="{{ url_for('announcements') }}">Audit Announcements</a>
     </section>
 </main>
 
