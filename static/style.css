@@ -493,3 +493,28 @@ footer a:hover {
 .calendar-list-view {
     max-width: 900px;
 }
+
+.outside-month {
+    opacity: 0.45;
+    background: rgba(245,247,242,0.75);
+}
+
+.today-label {
+    background: #FDB515;
+    color: #1f2933;
+    padding: 3px 7px;
+    border-radius: 12px;
+    font-size: 11px;
+    margin-left: 6px;
+    font-weight: bold;
+}
+
+.today-color {
+    background: #006747;
+}
+
+.today-cell {
+    background: rgba(0,103,71,0.10);
+    outline: 3px solid #006747;
+    outline-offset: -3px;
+}

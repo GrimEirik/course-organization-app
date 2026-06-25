@@ -18,9 +18,21 @@
     </div>
 
     <div class="calendar-toolbar">
-        <a class="calendar-action" href="{{ url_for('calendar', view='month') }}">Month</a>
-        <a class="calendar-action" href="{{ url_for('calendar', view='week') }}">Week</a>
-        <a class="calendar-action" href="{{ url_for('calendar', view='list') }}">List</a>
+        <a class="calendar-action" href="{{ url_for('calendar', view=selected_view, month=previous_month, year=previous_year) }}">
+            Previous
+        </a>
+
+        <h2>{{ month_name }} {{ selected_year }}</h2>
+
+        <a class="calendar-action" href="{{ url_for('calendar', view=selected_view, month=next_month, year=next_year) }}">
+            Next
+        </a>
+    </div>
+
+    <div class="calendar-toolbar">
+        <a class="calendar-action" href="{{ url_for('calendar', view='month', month=selected_month, year=selected_year) }}">Month</a>
+        <a class="calendar-action" href="{{ url_for('calendar', view='week', month=selected_month, year=selected_year) }}">Week</a>
+        <a class="calendar-action" href="{{ url_for('calendar', view='list', month=selected_month, year=selected_year) }}">List</a>
 
         {% if session["role"] == "Instructor" %}
             <a class="calendar-action add-event-button" href="{{ url_for('add_calendar_event') }}">Add Event</a>
@@ -37,54 +49,21 @@
             <div class="calendar-header">Friday</div>
             <div class="calendar-header">Saturday</div>
 
-            {% set calendar_days = [
-                ("May 31", "2026-05-31"),
-                ("Jun 1", "2026-06-01"),
-                ("2", "2026-06-02"),
-                ("3", "2026-06-03"),
-                ("4", "2026-06-04"),
-                ("5", "2026-06-05"),
-                ("6", "2026-06-06"),
+            {% for day in calendar_days %}
+                <div class="calendar-cell
+                    {% if day['is_today'] %}today-cell{% endif %}
+                    {% if not day['is_current_month'] %}outside-month{% endif %}
+                ">
+                    <div class="calendar-day-number">
+                        {{ day["label"] }}
 
-                ("7", "2026-06-07"),
-                ("8", "2026-06-08"),
-                ("9", "2026-06-09"),
-                ("10", "2026-06-10"),
-                ("11", "2026-06-11"),
-                ("12", "2026-06-12"),
-                ("13", "2026-06-13"),
+                        {% if day["is_today"] %}
+                            <span class="today-label">Today</span>
+                        {% endif %}
+                    </div>
 
-                ("14", "2026-06-14"),
-                ("15", "2026-06-15"),
-                ("16", "2026-06-16"),
-                ("17", "2026-06-17"),
-                ("18", "2026-06-18"),
-                ("19", "2026-06-19"),
-                ("20", "2026-06-20"),
-
-                ("21", "2026-06-21"),
-                ("22", "2026-06-22"),
-                ("23", "2026-06-23"),
-                ("24", "2026-06-24"),
-                ("25", "2026-06-25"),
-                ("26", "2026-06-26"),
-                ("27", "2026-06-27"),
-
-                ("28", "2026-06-28"),
-                ("29", "2026-06-29"),
-                ("30", "2026-06-30"),
-                ("Jul 1", "2026-07-01"),
-                ("2", "2026-07-02"),
-                ("3", "2026-07-03"),
-                ("4", "2026-07-04")
-            ] %}
-
-            {% for day_label, date_value in calendar_days %}
-                <div class="calendar-cell {% if date_value == '2026-06-12' %}today-cell{% endif %}">
-                    <div class="calendar-day-number">{{ day_label }}</div>
-
-                    {% if date_value in calendar_events %}
-                        {% for event in calendar_events[date_value] %}
+                    {% if day["date_value"] in calendar_events %}
+                        {% for event in calendar_events[day["date_value"]] %}
                             <div class="calendar-event {% if event['event_type'] == 'Assignment Due' %}assignment-event{% else %}manual-event{% endif %}">
                                 <strong>{{ event["title"] }}</strong>
                                 <br>
@@ -104,12 +83,6 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-
-                    {% if date_value == "2026-06-19" %}
-                        <div class="calendar-event holiday-event">
-                            Juneteenth Holiday
-                        </div>
-                    {% endif %}
                 </div>
             {% endfor %}
         </section>
@@ -117,24 +90,19 @@
 
     {% if selected_view == "week" %}
         <section class="week-calendar">
-            <h2>Week View: June 7 - June 13, 2026</h2>
+            <h2>Week View</h2>
 
-            {% set week_days = [
-                ("Sunday", "2026-06-07"),
-                ("Monday", "2026-06-08"),
-                ("Tuesday", "2026-06-09"),
-                ("Wednesday", "2026-06-10"),
-                ("Thursday", "2026-06-11"),
-                ("Friday", "2026-06-12"),
-                ("Saturday", "2026-06-13")
-            ] %}
+            {% for day in calendar_days[:7] %}
+                <div class="week-day-card {% if day['is_today'] %}today-cell{% endif %}">
+                    <h3>
+                        {{ day["date_value"] }}
+                        {% if day["is_today"] %}
+                            <span class="today-label">Today</span>
+                        {% endif %}
+                    </h3>
 
-            {% for day_name, date_value in week_days %}
-                <div class="week-day-card">
-                    <h3>{{ day_name }} — {{ date_value }}</h3>
-
-                    {% if date_value in calendar_events %}
-                        {% for event in calendar_events[date_value] %}
+                    {% if day["date_value"] in calendar_events %}
+                        {% for event in calendar_events[day["date_value"]] %}
                             <div class="calendar-event {% if event['event_type'] == 'Assignment Due' %}assignment-event{% else %}manual-event{% endif %}">
                                 <strong>{{ event["title"] }}</strong>
                                 <p>{{ event["description"] }}</p>
@@ -160,7 +128,12 @@
 
             {% for date_value, events in calendar_events.items() %}
                 <div class="calendar-list-date">
-                    <h3>{{ date_value }}</h3>
+                    <h3>
+                        {{ date_value }}
+                        {% if date_value == today_date %}
+                            <span class="today-label">Today</span>
+                        {% endif %}
+                    </h3>
 
                     {% for event in events %}
                         <div class="calendar-event {% if event['event_type'] == 'Assignment Due' %}assignment-event{% else %}manual-event{% endif %}">
@@ -187,11 +160,11 @@
     <section class="calendar-legend">
         <span><span class="legend-box assignment-color"></span> Assignment Due</span>
         <span><span class="legend-box manual-color"></span> Instructor Event / Reminder</span>
-        <span><span class="legend-box holiday-color"></span> Holiday / No Class</span>
+        <span><span class="legend-box today-color"></span> Current Day</span>
     </section>
 
     <div class="calendar-note">
-        <strong>Note:</strong> Assignment due dates come from instructor-created assignments. Manual events can be added by instructors.
+        <strong>Note:</strong> Assignment due dates come from instructor-created assignments. Manual events can be added by instructors. The current day is highlighted automatically using the real system date.
     </div>
 </main>
 

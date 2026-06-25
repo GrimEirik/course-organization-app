@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
+from datetime import date
+import calendar as py_calendar
 
 app = Flask(__name__)
 app.secret_key = "dev_secret_key"
@@ -273,7 +275,50 @@ def calendar():
     if not login_required():
         return redirect(url_for("login"))
 
+    today = date.today()
+
+    selected_month = request.args.get("month", today.month, type=int)
+    selected_year = request.args.get("year", today.year, type=int)
     selected_view = request.args.get("view", "month")
+
+    if selected_month < 1:
+        selected_month = 12
+        selected_year -= 1
+
+    if selected_month > 12:
+        selected_month = 1
+        selected_year += 1
+
+    previous_month = selected_month - 1
+    previous_year = selected_year
+
+    if previous_month < 1:
+        previous_month = 12
+        previous_year -= 1
+
+    next_month = selected_month + 1
+    next_year = selected_year
+
+    if next_month > 12:
+        next_month = 1
+        next_year += 1
+
+    month_name = py_calendar.month_name[selected_month]
+    month_days = py_calendar.Calendar(firstweekday=6).monthdatescalendar(
+        selected_year,
+        selected_month
+    )
+
+    calendar_days = []
+
+    for week in month_days:
+        for day in week:
+            calendar_days.append({
+                "label": day.day,
+                "date_value": day.isoformat(),
+                "is_current_month": day.month == selected_month,
+                "is_today": day == today
+            })
 
     assignment_items = fetch_all("""
         SELECT
@@ -335,7 +380,16 @@ def calendar():
     return render_template(
         "calendar.html",
         calendar_events=calendar_events,
-        selected_view=selected_view
+        selected_view=selected_view,
+        calendar_days=calendar_days,
+        month_name=month_name,
+        selected_month=selected_month,
+        selected_year=selected_year,
+        previous_month=previous_month,
+        previous_year=previous_year,
+        next_month=next_month,
+        next_year=next_year,
+        today_date=today.isoformat()
     )
 
 
