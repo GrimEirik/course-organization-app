@@ -5,13 +5,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<!-- ===================================================== -->
+<!-- Create Assignment Page                                -->
+<!-- Allows instructors to create assignments linked to an existing course. -->
+<!-- ===================================================== -->
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Create Assignment</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
+
 <main>
-    <form method="POST" class="form-box">
+    
+<!-- ===================================================== -->
+<!-- Create Assignment Form                                -->
+<!-- Collects assignment details and submits them to the create-assignment route. -->
+<!-- ===================================================== -->
+<form method="POST" class="form-box">
         <label>Course</label>
         <select name="course_id" required>
             {% for course in courses %}

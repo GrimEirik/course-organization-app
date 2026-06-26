@@ -6,10 +6,28 @@
 </head>
 <body>
 
+<!-- ===================================================== -->
+<!-- Assignment Calendar Page                              -->
+<!-- Displays assignment due dates and instructor-created events in month, week, or list view. -->
+<!-- ===================================================== -->
+
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Assignment Calendar</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
+
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
 
 <main>
     <div class="hero-banner">
@@ -17,7 +35,12 @@
         <p>Assignments are automatically added, and instructors can add reminders or course events.</p>
     </div>
 
-    <div class="calendar-toolbar">
+    
+<!-- ===================================================== -->
+<!-- Calendar Month Navigation                             -->
+<!-- Provides previous and next month navigation while preserving selected view. -->
+<!-- ===================================================== -->
+<div class="calendar-toolbar">
         <a class="calendar-action" href="{{ url_for('calendar', view=selected_view, month=previous_month, year=previous_year) }}">
             Previous
         </a>
@@ -29,7 +52,12 @@
         </a>
     </div>
 
-    <div class="calendar-toolbar">
+    
+<!-- ===================================================== -->
+<!-- Calendar View Navigation                              -->
+<!-- Allows users to switch between month, week, and list calendar views. -->
+<!-- ===================================================== -->
+<div class="calendar-toolbar">
         <a class="calendar-action" href="{{ url_for('calendar', view='month', month=selected_month, year=selected_year) }}">Month</a>
         <a class="calendar-action" href="{{ url_for('calendar', view='week', month=selected_month, year=selected_year) }}">Week</a>
         <a class="calendar-action" href="{{ url_for('calendar', view='list', month=selected_month, year=selected_year) }}">List</a>
@@ -39,7 +67,12 @@
         {% endif %}
     </div>
 
-    {% if selected_view == "month" %}
+    
+<!-- ===================================================== -->
+<!-- Month Calendar View                                   -->
+<!-- Displays events inside a traditional month-style calendar grid. -->
+<!-- ===================================================== -->
+{% if selected_view == "month" %}
         <section class="month-calendar">
             <div class="calendar-header">Sunday</div>
             <div class="calendar-header">Monday</div>
@@ -88,7 +121,12 @@
         </section>
     {% endif %}
 
-    {% if selected_view == "week" %}
+    
+<!-- ===================================================== -->
+<!-- Week Calendar View                                    -->
+<!-- Displays events in a focused weekly schedule layout.  -->
+<!-- ===================================================== -->
+{% if selected_view == "week" %}
         <section class="week-calendar">
             <h2>Week View</h2>
 
@@ -122,7 +160,12 @@
         </section>
     {% endif %}
 
-    {% if selected_view == "list" %}
+    
+<!-- ===================================================== -->
+<!-- List Calendar View                                    -->
+<!-- Displays all calendar events grouped by date.         -->
+<!-- ===================================================== -->
+{% if selected_view == "list" %}
         <section class="calendar-list-view">
             <h2>Calendar List View</h2>
 
@@ -157,7 +200,12 @@
         </section>
     {% endif %}
 
-    <section class="calendar-legend">
+    
+<!-- ===================================================== -->
+<!-- Calendar Legend                                       -->
+<!-- Explains the event color-coding used in the calendar. -->
+<!-- ===================================================== -->
+<section class="calendar-legend">
         <span><span class="legend-box assignment-color"></span> Assignment Due</span>
         <span><span class="legend-box manual-color"></span> Instructor Event / Reminder</span>
         <span><span class="legend-box today-color"></span> Current Day</span>
@@ -167,6 +215,12 @@
         <strong>Note:</strong> Assignment due dates come from instructor-created assignments. Manual events can be added by instructors. The current day is highlighted automatically using the real system date.
     </div>
 </main>
+
+
+<!-- ===================================================== -->
+<!-- Standard Application Footer                           -->
+<!-- Provides navigation links to About, Privacy, and Contact pages. -->
+<!-- ===================================================== -->
 
 <footer>
     <a href="{{ url_for('about') }}">About</a>

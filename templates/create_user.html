@@ -6,13 +6,36 @@
 </head>
 <body>
 
+<!-- ===================================================== -->
+<!-- Create User Page                                      -->
+<!-- Allows administrators to add new users and assign system roles. -->
+<!-- ===================================================== -->
+
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Create User</h1>
     <a href="{{ url_for('manage_users') }}">Back to Manage Users</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
+
 <main>
-    <form method="POST" class="form-box">
+    
+<!-- ===================================================== -->
+<!-- Create User Form                                      -->
+<!-- Collects new user credentials and role assignment.    -->
+<!-- ===================================================== -->
+<form method="POST" class="form-box">
         <label>Name</label>
         <input type="text" name="name" required>
 

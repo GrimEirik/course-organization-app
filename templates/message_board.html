@@ -5,19 +5,44 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<!-- ===================================================== -->
+<!-- Message Board Page                                  -->
+<!-- Supports course communication between students and instructors -->
+<!-- ===================================================== -->
 
+
+
+<!-- ===================================================== -->
+<!-- Header Navigation Section                           -->
+<!-- Displays page title and primary navigation link     -->
+<!-- ===================================================== -->
 <header>
     <h1>Message Board</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Content Section                                -->
+<!-- Contains the primary page functionality and displayed data -->
+<!-- ===================================================== -->
 <main>
-    <div class="hero-banner">
+    
+<!-- ===================================================== -->
+<!-- Hero Banner Section                                 -->
+<!-- Provides a professional page introduction and purpose statement -->
+<!-- ===================================================== -->
+<div class="hero-banner">
         <h2>Course Communication Center</h2>
         <p>Post class messages, ask questions, and communicate with instructors.</p>
     </div>
 
-    <form method="POST" class="form-box">
+    
+<!-- ===================================================== -->
+<!-- Data Entry Form Section                             -->
+<!-- Collects user input and submits it to the Flask route -->
+<!-- ===================================================== -->
+<form method="POST" class="form-box">
         <label>Recipient Role</label>
         <select name="recipient_role" required>
             <option value="All">All</option>
@@ -48,7 +73,17 @@
 
     <h2>Message History</h2>
 
-    <section class="message-board">
+    
+<!-- ===================================================== -->
+<!-- Message History Section                             -->
+<!-- Displays stored communication records from the database -->
+<!-- ===================================================== -->
+<section class="message-board">
+        
+<!-- ===================================================== -->
+<!-- Message Record Loop                                 -->
+<!-- Repeats each stored message from the database       -->
+<!-- ===================================================== -->
         {% for message in messages %}
             <div class="message-card">
                 <h3>{{ message["sender_name"] }} — {{ message["sender_role"] }}</h3>
@@ -64,6 +99,11 @@
     </section>
 </main>
 
+
+<!-- ===================================================== -->
+<!-- Standard Footer Section                             -->
+<!-- Provides navigation to about, privacy, and contact pages -->
+<!-- ===================================================== -->
 <footer>
     <a href="{{ url_for('about') }}">About</a>
     <a href="{{ url_for('privacy') }}">Privacy Statement</a>

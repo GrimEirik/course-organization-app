@@ -1,3 +1,8 @@
+<!-- ===================================================== -->
+<!-- Grades Page                                           -->
+<!-- Displays assignment grades and related comments.      -->
+<!-- ===================================================== -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,13 +10,30 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Grades</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
+
 <main>
-    {% for grade in grades %}
+    
+<!-- ===================================================== -->
+<!-- Grade Output Loop                                     -->
+<!-- Displays each grade record passed from the Flask route. -->
+<!-- ===================================================== -->
+{% for grade in grades %}
         <div class="card wide">
             <h2>Assignment ID: {{ grade["assignment_id"] }}</h2>
             <p><strong>Score:</strong> {{ grade["score"] }}</p>

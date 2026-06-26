@@ -1,3 +1,14 @@
+/*
+Course Organization & Management Application Stylesheet
+
+Provides the professional green/gold visual theme, dashboard cards,
+forms, message board, notification badges, and dynamic calendar styling.
+*/
+
+/* ---------------------------------------------------------
+   Global Page Theme
+   ---------------------------------------------------------
+   Controls base font, background gradients, and default text color. */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -10,6 +21,10 @@ body {
     color: #1f2933;
 }
 
+/* ---------------------------------------------------------
+   Header and Navigation
+   ---------------------------------------------------------
+   Styles page headers and logout/back links. */
 header {
     background: linear-gradient(135deg, #006747, #007f55, #006747);
     color: white;
@@ -36,6 +51,10 @@ main {
     padding: 30px;
 }
 
+/* ---------------------------------------------------------
+   Hero Banner
+   ---------------------------------------------------------
+   Gives dashboards and feature pages a professional portal look. */
 .hero-banner {
     background: linear-gradient(135deg, #006747, #00895c);
     color: white;
@@ -62,6 +81,10 @@ h2, h3 {
     color: #006747;
 }
 
+/* ---------------------------------------------------------
+   Dashboard Cards
+   ---------------------------------------------------------
+   Used for role-based dashboard actions and navigation tiles. */
 .cards {
     display: flex;
     flex-wrap: wrap;
@@ -98,6 +121,10 @@ a.card {
     margin-bottom: 20px;
 }
 
+/* ---------------------------------------------------------
+   Forms and Business Panels
+   ---------------------------------------------------------
+   Styles data-entry forms and informational content panels. */
 .form-box,
 .business-panel {
     background: rgba(255,255,255,0.95);
@@ -152,6 +179,10 @@ button:hover {
     margin-top: 10px;
 }
 
+/* ---------------------------------------------------------
+   Login Page
+   ---------------------------------------------------------
+   Styles login containers and demo user helper areas. */
 .login-container,
 .login-box {
     max-width: 420px;
@@ -192,6 +223,10 @@ button:hover {
     color: #006747;
 }
 
+/* ---------------------------------------------------------
+   Footer Links
+   ---------------------------------------------------------
+   Provides About, Privacy, and Contact links. */
 footer {
     margin-top: 40px;
     padding: 22px;
@@ -241,6 +276,10 @@ footer a:hover {
     color: #006747;
 }
 
+/* ---------------------------------------------------------
+   Message Notifications
+   ---------------------------------------------------------
+   Styles unread message badges and recent message previews. */
 .notification-card {
     position: relative;
 }
@@ -289,6 +328,10 @@ footer a:hover {
     color: #555;
 }
 
+/* ---------------------------------------------------------
+   Message Board
+   ---------------------------------------------------------
+   Styles message board and admin chat audit log entries. */
 .message-board {
     max-width: 950px;
     margin-top: 25px;
@@ -312,6 +355,10 @@ footer a:hover {
     color: #555;
 }
 
+/* ---------------------------------------------------------
+   Calendar Navigation
+   ---------------------------------------------------------
+   Styles month/week/list controls and previous/next navigation. */
 .calendar-toolbar {
     display: flex;
     justify-content: space-between;
@@ -343,6 +390,7 @@ footer a:hover {
     color: white;
 }
 
+/* Calendar month grid with seven day columns. */
 .month-calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -382,6 +430,7 @@ footer a:hover {
     outline-offset: -2px;
 }
 
+/* Individual calendar event cards inside day cells. */
 .calendar-event {
     padding: 6px 8px;
     border-radius: 6px;
@@ -494,6 +543,7 @@ footer a:hover {
     max-width: 900px;
 }
 
+/* Dynamic calendar helpers for outside-month days and current day. */
 .outside-month {
     opacity: 0.45;
     background: rgba(245,247,242,0.75);

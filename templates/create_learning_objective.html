@@ -5,13 +5,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<!-- ===================================================== -->
+<!-- Create Learning Objective Page                        -->
+<!-- Allows instructors to create learning objectives linked to a course. -->
+<!-- ===================================================== -->
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Create Learning Objective</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
+
 <main>
-    <form method="POST" class="form-box">
+    
+<!-- ===================================================== -->
+<!-- Create Learning Objective Form                        -->
+<!-- Collects a course selection and objective description. -->
+<!-- ===================================================== -->
+<form method="POST" class="form-box">
         <label>Course</label>
         <select name="course_id" required>
             {% for course in courses %}

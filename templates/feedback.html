@@ -5,13 +5,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<!-- ===================================================== -->
+<!-- Feedback Page                                         -->
+<!-- Displays instructor feedback records for assignments. -->
+<!-- ===================================================== -->
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Instructor Feedback</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
+
 <main>
-    {% for item in feedback %}
+    
+<!-- ===================================================== -->
+<!-- Feedback Output Loop                                  -->
+<!-- Displays each feedback record passed from the Flask route. -->
+<!-- ===================================================== -->
+{% for item in feedback %}
         <div class="card wide">
             <p>{{ item["comments"] }}</p>
             <p><strong>Posted:</strong> {{ item["post_date"] }}</p>

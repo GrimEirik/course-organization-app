@@ -5,15 +5,35 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<!-- ===================================================== -->
+<!-- Manage Users Page                                   -->
+<!-- Allows administrators to review, edit, and delete user accounts -->
+<!-- ===================================================== -->
 
+
+
+<!-- ===================================================== -->
+<!-- Header Navigation Section                           -->
+<!-- Displays page title and primary navigation link     -->
+<!-- ===================================================== -->
 <header>
     <h1>Manage Users</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Content Section                                -->
+<!-- Contains the primary page functionality and displayed data -->
+<!-- ===================================================== -->
 <main>
     <a class="card" href="{{ url_for('create_user') }}">Create New User</a>
 
+    
+<!-- ===================================================== -->
+<!-- User Account Loop                                   -->
+<!-- Repeats user account details for administrator review -->
+<!-- ===================================================== -->
     {% for user in users %}
         <div class="card wide">
             <h2>{{ user["name"] }}</h2>

@@ -7,10 +7,28 @@
 </head>
 <body>
 
+<!-- ===================================================== -->
+<!-- General Dashboard Page                                -->
+<!-- Legacy/common dashboard layout for basic course navigation. -->
+<!-- ===================================================== -->
+
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Course Organization & Management Application</h1>
     <a href="{{ url_for('logout') }}">Logout</a>
 </header>
+
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
 
 <main>
     <h2>Dashboard</h2>
@@ -18,6 +36,11 @@
     <p>Welcome, {{ session["name"] }}.</p>
     <p>Your role is: <strong>{{ session["role"] }}</strong></p>
 
+
+<!-- ===================================================== -->
+<!-- Dashboard Navigation Cards                            -->
+<!-- Provides quick links to major application sections.   -->
+<!-- ===================================================== -->
 <section class="cards">
     <a class="card" href="{{ url_for('courses') }}">Courses</a>
     <a class="card" href="{{ url_for('assignments') }}">Assignments</a>

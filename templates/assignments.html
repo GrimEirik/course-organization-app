@@ -5,13 +5,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<!-- ===================================================== -->
+<!-- Assignments Page                                      -->
+<!-- Displays assignment records, due dates, and point values. -->
+<!-- ===================================================== -->
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Assignments</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
+
 <main>
-    {% for assignment in assignments %}
+    
+<!-- ===================================================== -->
+<!-- Assignment Output Loop                                -->
+<!-- Displays each assignment record passed from the Flask route. -->
+<!-- ===================================================== -->
+{% for assignment in assignments %}
         <div class="card wide">
             <h2>{{ assignment["title"] }}</h2>
             <p><strong>Due Date:</strong> {{ assignment["due_date"] }}</p>

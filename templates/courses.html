@@ -5,13 +5,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<!-- ===================================================== -->
+<!-- Courses Page                                          -->
+<!-- Displays course records and related instructor information. -->
+<!-- ===================================================== -->
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Courses</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
+
 <main>
-    {% for course in courses %}
+    
+<!-- ===================================================== -->
+<!-- Course Output Loop                                    -->
+<!-- Displays each course record passed from the Flask route. -->
+<!-- ===================================================== -->
+{% for course in courses %}
         <div class="card wide">
             <h2>{{ course["course_name"] }}</h2>
             <p><strong>Instructor:</strong> {{ course["instructor"] }}</p>

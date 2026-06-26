@@ -5,14 +5,34 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<!-- ===================================================== -->
+<!-- Lesson Plans Page                                   -->
+<!-- Displays lesson plan content created by instructors -->
+<!-- ===================================================== -->
 
+
+
+<!-- ===================================================== -->
+<!-- Header Navigation Section                           -->
+<!-- Displays page title and primary navigation link     -->
+<!-- ===================================================== -->
 <header>
     <h1>Lesson Plans</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Content Section                                -->
+<!-- Contains the primary page functionality and displayed data -->
+<!-- ===================================================== -->
 <main>
 
+    
+<!-- ===================================================== -->
+<!-- Lesson Plan Loop                                    -->
+<!-- Repeats one display card for each lesson plan record -->
+<!-- ===================================================== -->
     {% for plan in lesson_plans %}
 
     <div class="card wide">

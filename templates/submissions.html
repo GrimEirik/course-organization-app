@@ -5,13 +5,33 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<!-- ===================================================== -->
+<!-- Student Submissions Page                            -->
+<!-- Allows instructors and administrators to review submitted work -->
+<!-- ===================================================== -->
 
+
+
+<!-- ===================================================== -->
+<!-- Header Navigation Section                           -->
+<!-- Displays page title and primary navigation link     -->
+<!-- ===================================================== -->
 <header>
     <h1>Student Submissions</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Content Section                                -->
+<!-- Contains the primary page functionality and displayed data -->
+<!-- ===================================================== -->
 <main>
+    
+<!-- ===================================================== -->
+<!-- Submission Record Loop                              -->
+<!-- Repeats submitted assignment records for review     -->
+<!-- ===================================================== -->
     {% for submission in submissions %}
         <div class="card wide">
             <h2>{{ submission["assignment_title"] }}</h2>

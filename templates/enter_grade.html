@@ -5,13 +5,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<!-- ===================================================== -->
+<!-- Enter Grade Page                                      -->
+<!-- Allows instructors to record scores and comments for student assignments. -->
+<!-- ===================================================== -->
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Enter Grade</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
+
 <main>
-    <form method="POST" class="form-box">
+    
+<!-- ===================================================== -->
+<!-- Grade Entry Form                                      -->
+<!-- Collects assignment, student, score, and instructor comments. -->
+<!-- ===================================================== -->
+<form method="POST" class="form-box">
         <label>Assignment</label>
         <select name="assignment_id" required>
             {% for assignment in assignments %}

@@ -1,11 +1,35 @@
+"""
+Database Initialization Script
+
+Creates all SQLite tables and seed data for the application.
+The table groups mirror the planned system entities: users, courses,
+assignments, submissions, grades, feedback, messages, and calendar events.
+"""
+
+# ---------------------------------------------------------
+# Imports
+# ---------------------------------------------------------
+# sqlite3 provides database support; os creates the database folder.
 import sqlite3
 import os
 
+# ---------------------------------------------------------
+# Database Folder Setup
+# ---------------------------------------------------------
+# Create the database folder if it does not already exist.
 os.makedirs("database", exist_ok=True)
 
+# ---------------------------------------------------------
+# Database Connection
+# ---------------------------------------------------------
+# Connect to the local SQLite database and prepare a cursor.
 conn = sqlite3.connect("database/course_app.db")
 cursor = conn.cursor()
 
+# ---------------------------------------------------------
+# User and Role Table
+# ---------------------------------------------------------
+# Stores login information and role-based access level.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -16,6 +40,10 @@ CREATE TABLE IF NOT EXISTS users (
 )
 """)
 
+# ---------------------------------------------------------
+# Course Table
+# ---------------------------------------------------------
+# Stores course records created and managed by instructors.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS courses (
     course_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,6 +53,10 @@ CREATE TABLE IF NOT EXISTS courses (
 )
 """)
 
+# ---------------------------------------------------------
+# Assignment Table
+# ---------------------------------------------------------
+# Stores course assignments; due dates also feed the calendar.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS assignments (
     assignment_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,6 +68,10 @@ CREATE TABLE IF NOT EXISTS assignments (
 )
 """)
 
+# ---------------------------------------------------------
+# Announcement Table
+# ---------------------------------------------------------
+# Stores instructor announcements for students.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS announcements (
     announcement_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,6 +83,10 @@ CREATE TABLE IF NOT EXISTS announcements (
 )
 """)
 
+# ---------------------------------------------------------
+# Grade Table
+# ---------------------------------------------------------
+# Stores scores tied to students and assignments.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS grades (
     grade_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -59,6 +99,10 @@ CREATE TABLE IF NOT EXISTS grades (
 )
 """)
 
+# ---------------------------------------------------------
+# Feedback Table
+# ---------------------------------------------------------
+# Stores instructor feedback for student assignments.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS feedback (
     feedback_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -71,6 +115,10 @@ CREATE TABLE IF NOT EXISTS feedback (
 )
 """)
 
+# ---------------------------------------------------------
+# Lesson Plan Table
+# ---------------------------------------------------------
+# Stores instructional planning material.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS lesson_plans (
     lesson_plan_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -82,6 +130,10 @@ CREATE TABLE IF NOT EXISTS lesson_plans (
 )
 """)
 
+# ---------------------------------------------------------
+# Learning Objectives Table
+# ---------------------------------------------------------
+# Stores course learning outcomes.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS learning_objectives (
     objective_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -91,6 +143,10 @@ CREATE TABLE IF NOT EXISTS learning_objectives (
 )
 """)
 
+# ---------------------------------------------------------
+# Submission Table
+# ---------------------------------------------------------
+# Stores student assignment submissions for instructor review.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS submissions (
     submission_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -104,6 +160,10 @@ CREATE TABLE IF NOT EXISTS submissions (
 )
 """)
 
+# ---------------------------------------------------------
+# Message Board Table
+# ---------------------------------------------------------
+# Stores student/instructor communication and admin-auditable logs.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS messages (
     message_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -119,6 +179,10 @@ CREATE TABLE IF NOT EXISTS messages (
 )
 """)
 
+# ---------------------------------------------------------
+# Message Read Tracking Table
+# ---------------------------------------------------------
+# Tracks last seen message ID so dashboards can show unread counts.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS message_reads (
     read_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -128,6 +192,10 @@ CREATE TABLE IF NOT EXISTS message_reads (
 )
 """)
 
+# ---------------------------------------------------------
+# Manual Calendar Events Table
+# ---------------------------------------------------------
+# Stores instructor-created calendar reminders and course events.
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS calendar_events (
     event_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -140,6 +208,10 @@ CREATE TABLE IF NOT EXISTS calendar_events (
 )
 """)
 
+# ---------------------------------------------------------
+# Seed Data: Demo Users
+# ---------------------------------------------------------
+# Creates default Student, Instructor, and Administrator accounts.
 cursor.execute("""
 INSERT OR IGNORE INTO users (user_id, name, email, password, role)
 VALUES
@@ -148,6 +220,10 @@ VALUES
 (3, 'Admin User', 'admin@test.com', 'password', 'Administrator')
 """)
 
+# ---------------------------------------------------------
+# Seed Data: Academic Records
+# ---------------------------------------------------------
+# Adds sample course, assignment, announcement, grade, and content data.
 cursor.execute("""
 INSERT OR IGNORE INTO courses (course_id, course_name, instructor, description)
 VALUES
@@ -196,6 +272,10 @@ VALUES
 (1, 1, 1, 'Initial topology report submitted for review.', '2026-06-05', 'Submitted')
 """)
 
+# ---------------------------------------------------------
+# Seed Data: Message Board
+# ---------------------------------------------------------
+# Adds an initial instructor message for dashboard previews.
 cursor.execute("""
 INSERT OR IGNORE INTO messages (
     message_id,
@@ -220,6 +300,10 @@ VALUES
 (3, 0)
 """)
 
+# ---------------------------------------------------------
+# Seed Data: Calendar Event
+# ---------------------------------------------------------
+# Adds a sample instructor office-hours event.
 cursor.execute("""
 INSERT OR IGNORE INTO calendar_events (
     event_id,
@@ -233,6 +317,10 @@ VALUES
 (1, 'Instructor Office Hours', 'Optional support session for project questions.', '2026-06-12', 'Event / Reminder', 2)
 """)
 
+# ---------------------------------------------------------
+# Save and Close
+# ---------------------------------------------------------
+# Save all database changes and close the connection.
 conn.commit()
 conn.close()
 

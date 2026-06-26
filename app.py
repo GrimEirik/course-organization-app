@@ -1,20 +1,47 @@
+"""
+Course Organization & Management Application
+
+This Flask application supports the COM-430 course project. It includes:
+login/session management, role-based dashboards, course workflows,
+calendar integration, message notifications, and administrative reports.
+
+The comments use a pseudocode style so the code can be mapped back to
+planned requirements, features, functions, and system behaviors.
+"""
+
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from datetime import date
 import calendar as py_calendar
 
+# ---------------------------------------------------------
+# Flask Application Setup
+# ---------------------------------------------------------
+# Step 1: Create the Flask application object.
+# Step 2: Configure a secret key for session storage.
+# Step 3: Store the SQLite database path used by all routes.
 app = Flask(__name__)
 app.secret_key = "dev_secret_key"
 
 DATABASE = "database/course_app.db"
 
 
+# ---------------------------------------------------------
+# Database Connection Helper
+# ---------------------------------------------------------
+# Opens the SQLite database and returns rows that can be accessed
+# by field name, making query results easier to use in templates.
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
 
+# ---------------------------------------------------------
+# Login and Role Authorization Helpers
+# ---------------------------------------------------------
+# These functions centralize access control so the application can
+# enforce Student, Instructor, and Administrator permissions.
 def login_required():
     return "user_id" in session
 
@@ -39,6 +66,11 @@ def admin_or_instructor_required():
     return role_required("Instructor", "Administrator")
 
 
+# ---------------------------------------------------------
+# Reusable Database Query Helpers
+# ---------------------------------------------------------
+# These helpers prevent repeated connection/commit/close code and
+# make each route easier to follow.
 def fetch_all(query, params=()):
     conn = get_db_connection()
     records = conn.execute(query, params).fetchall()
@@ -65,6 +97,11 @@ def count_records(table_name):
     return record["total"]
 
 
+# ---------------------------------------------------------
+# Message Board Notification Helpers
+# ---------------------------------------------------------
+# These helpers support recent-message previews and unread-message
+# counts on Student and Instructor dashboards.
 def get_recent_messages(limit=3):
     return fetch_all(
         """
@@ -119,11 +156,21 @@ def mark_messages_seen(user_id):
     )
 
 
+# ---------------------------------------------------------
+# Home Route
+# ---------------------------------------------------------
+# Redirect the base application URL to the login page.
 @app.route("/")
 def home():
     return redirect(url_for("login"))
 
 
+# ---------------------------------------------------------
+# Login Route
+# ---------------------------------------------------------
+# GET: display the login page.
+# POST: validate credentials, then store user identity and role
+# in the Flask session.
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -148,6 +195,11 @@ def login():
     return render_template("login.html")
 
 
+# ---------------------------------------------------------
+# Dashboard Routing
+# ---------------------------------------------------------
+# Direct each authenticated user to the correct role-based dashboard.
+# Student and Instructor dashboards also receive message preview data.
 @app.route("/dashboard")
 def dashboard():
     if not login_required():
@@ -176,6 +228,11 @@ def dashboard():
     return redirect(url_for("login"))
 
 
+# ---------------------------------------------------------
+# Message Board Route
+# ---------------------------------------------------------
+# Students and instructors can post and review course messages.
+# Opening the page marks messages as seen for unread-count tracking.
 @app.route("/message-board", methods=["GET", "POST"])
 def message_board():
     if not role_required("Student", "Instructor"):
@@ -215,6 +272,10 @@ def message_board():
     return render_template("message_board.html", messages=messages)
 
 
+# ---------------------------------------------------------
+# Administrator Chat Audit Log
+# ---------------------------------------------------------
+# Administrators can review all message activity for oversight.
 @app.route("/admin-chat-log")
 def admin_chat_log():
     if not admin_required():
@@ -231,6 +292,10 @@ def admin_chat_log():
     return render_template("admin_chat_log.html", messages=messages)
 
 
+# ---------------------------------------------------------
+# Administrator Reports Route
+# ---------------------------------------------------------
+# Count major records so administrators can monitor system activity.
 @app.route("/admin-reports")
 def admin_reports():
     if not admin_required():
@@ -252,6 +317,10 @@ def admin_reports():
     return render_template("admin_reports.html", stats=stats)
 
 
+# ---------------------------------------------------------
+# Shared Course and Academic Content Routes
+# ---------------------------------------------------------
+# Authenticated users can view core academic records.
 @app.route("/courses")
 def courses():
     if not login_required():
@@ -270,6 +339,13 @@ def assignments():
     return render_template("assignments.html", assignments=assignments)
 
 
+# ---------------------------------------------------------
+# Dynamic Assignment Calendar Route
+# ---------------------------------------------------------
+# Step 1: Read selected month/year/view from the URL.
+# Step 2: Generate a real calendar grid from the system date.
+# Step 3: Combine assignment due dates with manual instructor events.
+# Step 4: Group events by date for display in the calendar template.
 @app.route("/calendar")
 def calendar():
     if not login_required():
@@ -393,6 +469,11 @@ def calendar():
     )
 
 
+# ---------------------------------------------------------
+# Instructor Calendar Event Route
+# ---------------------------------------------------------
+# Instructors can add manual calendar events such as office hours,
+# reminders, exams, study sessions, or no-class notices.
 @app.route("/add-calendar-event", methods=["GET", "POST"])
 def add_calendar_event():
     if not instructor_required():
@@ -419,6 +500,11 @@ def add_calendar_event():
     return render_template("add_calendar_event.html")
 
 
+# ---------------------------------------------------------
+# Calendar Event Delete Route
+# ---------------------------------------------------------
+# Instructors and administrators can delete manual calendar events.
+# Assignment due dates are controlled by the assignments table.
 @app.route("/delete-calendar-event/<int:event_id>")
 def delete_calendar_event(event_id):
     if not role_required("Instructor", "Administrator"):
@@ -477,6 +563,11 @@ def learning_objectives():
     return render_template("learning_objectives.html", objectives=objectives)
 
 
+# ---------------------------------------------------------
+# Submission Review Route
+# ---------------------------------------------------------
+# Instructors and administrators can view student submissions.
+# The query joins submissions, assignments, and users for context.
 @app.route("/submissions")
 def submissions():
     if not admin_or_instructor_required():
@@ -498,6 +589,10 @@ def submissions():
     return render_template("submissions.html", submissions=submissions)
 
 
+# ---------------------------------------------------------
+# Student Assignment Submission Route
+# ---------------------------------------------------------
+# Students select an assignment and submit text-based work for review.
 @app.route("/submit-assignment", methods=["GET", "POST"])
 def submit_assignment():
     if not student_required():
@@ -526,6 +621,11 @@ def submit_assignment():
     return render_template("submit_assignment.html", assignments=assignments)
 
 
+# ---------------------------------------------------------
+# Instructor Content Creation Routes
+# ---------------------------------------------------------
+# Instructors create courses, assignments, announcements, lesson plans,
+# and learning objectives.
 @app.route("/create-course", methods=["GET", "POST"])
 def create_course():
     if not instructor_required():
@@ -600,6 +700,10 @@ def post_announcement():
     return render_template("post_announcement.html", courses=courses)
 
 
+# ---------------------------------------------------------
+# Instructor Evaluation Routes
+# ---------------------------------------------------------
+# Instructors record grades and feedback for student work.
 @app.route("/enter-grade", methods=["GET", "POST"])
 def enter_grade():
     if not instructor_required():
@@ -708,6 +812,10 @@ def create_learning_objective():
     return render_template("create_learning_objective.html", courses=courses)
 
 
+# ---------------------------------------------------------
+# Administrator User Management Routes
+# ---------------------------------------------------------
+# Administrators create, edit, delete, and review system users.
 @app.route("/manage-users")
 def manage_users():
     if not admin_required():
@@ -788,6 +896,10 @@ def delete_user(user_id):
     return redirect(url_for("manage_users"))
 
 
+# ---------------------------------------------------------
+# Professional Business Information Pages
+# ---------------------------------------------------------
+# These pages provide About, Privacy Statement, and Contact content.
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
@@ -803,11 +915,19 @@ def about():
     return render_template("about.html")
 
 
+# ---------------------------------------------------------
+# Logout Route
+# ---------------------------------------------------------
+# Clear session information and return the user to the login page.
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("login"))
 
 
+# ---------------------------------------------------------
+# Local Development Entry Point
+# ---------------------------------------------------------
+# Run the Flask development server when app.py is executed directly.
 if __name__ == "__main__":
     app.run(debug=True)

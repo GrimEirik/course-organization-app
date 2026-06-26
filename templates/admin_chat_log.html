@@ -6,10 +6,28 @@
 </head>
 <body>
 
+<!-- ===================================================== -->
+<!-- Administrator Chat Audit Log                          -->
+<!-- Displays stored message-board communication for administrator review. -->
+<!-- ===================================================== -->
+
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Chat Audit Log</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
+
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
 
 <main>
     <div class="hero-banner">
@@ -17,7 +35,12 @@
         <p>Administrators can review communication activity across the course system.</p>
     </div>
 
-    <section class="message-board">
+    
+<!-- ===================================================== -->
+<!-- Message Audit Output                                  -->
+<!-- Loops through stored messages so administrators can review communication history. -->
+<!-- ===================================================== -->
+<section class="message-board">
         {% for message in messages %}
             <div class="message-card">
                 <h3>{{ message["sender_name"] }} — {{ message["sender_role"] }}</h3>
@@ -32,6 +55,12 @@
         {% endfor %}
     </section>
 </main>
+
+
+<!-- ===================================================== -->
+<!-- Standard Application Footer                           -->
+<!-- Provides navigation links to About, Privacy, and Contact pages. -->
+<!-- ===================================================== -->
 
 <footer>
     <a href="{{ url_for('about') }}">About</a>

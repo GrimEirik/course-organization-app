@@ -1,11 +1,28 @@
+"""
+Automated Route Protection Tests
+
+These pytest tests verify that important routes are protected.
+Protected pages should redirect unauthenticated users instead of
+displaying restricted student, instructor, or admin content.
+"""
+
+# ---------------------------------------------------------
+# Import Path Setup
+# ---------------------------------------------------------
+# Add project root to Python path so tests can import app.py.
 import sys
 import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+# Import Flask application object for test client creation.
 from app import app
 
 
+# ---------------------------------------------------------
+# Public Login Page Test
+# ---------------------------------------------------------
+# Login should be available without an authenticated session.
 def test_login_page_loads():
     tester = app.test_client()
     response = tester.get("/login")
@@ -13,6 +30,10 @@ def test_login_page_loads():
     assert b"Login" in response.data
 
 
+# ---------------------------------------------------------
+# Core Route Protection Tests
+# ---------------------------------------------------------
+# Protected pages should redirect when no user is logged in.
 def test_home_redirects_to_login():
     tester = app.test_client()
     response = tester.get("/")
@@ -90,6 +111,10 @@ def test_manage_users_requires_admin_login():
     response = tester.get("/manage-users")
     assert response.status_code == 302
 
+# ---------------------------------------------------------
+# Calendar and Communication Protection Tests
+# ---------------------------------------------------------
+# Newer features still require login and role checks.
 def test_calendar_requires_login():
     tester = app.test_client()
     response = tester.get("/calendar")

@@ -5,13 +5,33 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<!-- ===================================================== -->
+<!-- Provide Feedback Page                               -->
+<!-- Allows instructors to provide assignment feedback to students -->
+<!-- ===================================================== -->
+
+
+<!-- ===================================================== -->
+<!-- Header Navigation Section                           -->
+<!-- Displays page title and primary navigation link     -->
+<!-- ===================================================== -->
 <header>
     <h1>Provide Feedback</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Content Section                                -->
+<!-- Contains the primary page functionality and displayed data -->
+<!-- ===================================================== -->
 <main>
-    <form method="POST" class="form-box">
+    
+<!-- ===================================================== -->
+<!-- Data Entry Form Section                             -->
+<!-- Collects user input and submits it to the Flask route -->
+<!-- ===================================================== -->
+<form method="POST" class="form-box">
         <label>Assignment</label>
         <select name="assignment_id" required>
             {% for assignment in assignments %}

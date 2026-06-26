@@ -5,14 +5,34 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<!-- ===================================================== -->
+<!-- Instructor Dashboard Page                           -->
+<!-- Organizes instructor content, grading, and messaging tools -->
+<!-- ===================================================== -->
 
+
+
+<!-- ===================================================== -->
+<!-- Header Navigation Section                           -->
+<!-- Displays page title and primary navigation link     -->
+<!-- ===================================================== -->
 <header>
     <h1>Instructor Dashboard</h1>
     <a href="{{ url_for('logout') }}">Logout</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Content Section                                -->
+<!-- Contains the primary page functionality and displayed data -->
+<!-- ===================================================== -->
 <main>
-    <div class="hero-banner">
+    
+<!-- ===================================================== -->
+<!-- Hero Banner Section                                 -->
+<!-- Provides a professional page introduction and purpose statement -->
+<!-- ===================================================== -->
+<div class="hero-banner">
         <h2>Instructor Workspace</h2>
         <p>Create course content, review student work, and manage academic progress.</p>
     </div>
@@ -21,9 +41,19 @@
     <p>Role: {{ session["role"] }}</p>
 
     <h3>Messages and Notifications</h3>
-    <section class="cards">
+    
+<!-- ===================================================== -->
+<!-- Dashboard Card Navigation Section                   -->
+<!-- Displays role-specific feature links as clickable cards -->
+<!-- ===================================================== -->
+<section class="cards">
         <a class="card notification-card" href="{{ url_for('message_board') }}">
             Message Board
+            
+<!-- ===================================================== -->
+<!-- Notification Check                                  -->
+<!-- Displays unread count when new messages exist       -->
+<!-- ===================================================== -->
             {% if unread_count > 0 %}
                 <span class="notification-badge">{{ unread_count }} New</span>
             {% else %}
@@ -32,9 +62,19 @@
         </a>
     </section>
 
-    <section class="message-preview">
+    
+<!-- ===================================================== -->
+<!-- Recent Message Preview Section                      -->
+<!-- Shows recent messages directly on the dashboard     -->
+<!-- ===================================================== -->
+<section class="message-preview">
         <h3>Recent Student/Class Messages</h3>
 
+        
+<!-- ===================================================== -->
+<!-- Recent Message Loop                                 -->
+<!-- Repeats recent messages on the dashboard preview    -->
+<!-- ===================================================== -->
         {% for message in recent_messages %}
             <div class="message-preview-item">
                 <strong>{{ message["sender_name"] }}:</strong>
@@ -72,6 +112,11 @@
     </section>
 </main>
 
+
+<!-- ===================================================== -->
+<!-- Standard Footer Section                             -->
+<!-- Provides navigation to about, privacy, and contact pages -->
+<!-- ===================================================== -->
 <footer>
     <a href="{{ url_for('about') }}">About</a>
     <a href="{{ url_for('privacy') }}">Privacy Statement</a>

@@ -6,10 +6,28 @@
 </head>
 <body>
 
+<!-- ===================================================== -->
+<!-- Administrator Dashboard                               -->
+<!-- Provides system management, reporting, and audit navigation for administrators. -->
+<!-- ===================================================== -->
+
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Administrator Dashboard</h1>
     <a href="{{ url_for('logout') }}">Logout</a>
 </header>
+
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
 
 <main>
     <div class="hero-banner">
@@ -20,14 +38,24 @@
     <h2>Welcome, {{ session["name"] }}</h2>
     <p>Role: {{ session["role"] }}</p>
 
-    <h3>System Administration</h3>
+    
+<!-- ===================================================== -->
+<!-- System Administration Section                         -->
+<!-- Links administrators to user management, reports, and chat audit tools. -->
+<!-- ===================================================== -->
+<h3>System Administration</h3>
     <section class="cards">
         <a class="card" href="{{ url_for('manage_users') }}">Manage Users</a>
         <a class="card" href="{{ url_for('admin_reports') }}">System Reports</a>
         <a class="card" href="{{ url_for('admin_chat_log') }}">Chat Audit Log</a>
     </section>
 
-    <h3>System Oversight</h3>
+    
+<!-- ===================================================== -->
+<!-- System Oversight Section                              -->
+<!-- Provides audit access to major academic and system records. -->
+<!-- ===================================================== -->
+<h3>System Oversight</h3>
     <section class="cards">
         <a class="card" href="{{ url_for('courses') }}">Audit Courses</a>
         <a class="card" href="{{ url_for('assignments') }}">Audit Assignments</a>
@@ -39,6 +67,12 @@
         <a class="card" href="{{ url_for('announcements') }}">Audit Announcements</a>
     </section>
 </main>
+
+
+<!-- ===================================================== -->
+<!-- Standard Application Footer                           -->
+<!-- Provides navigation links to About, Privacy, and Contact pages. -->
+<!-- ===================================================== -->
 
 <footer>
     <a href="{{ url_for('about') }}">About</a>

@@ -6,11 +6,21 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="login-page">
+<!-- ===================================================== -->
+<!-- Login Page                                          -->
+<!-- Authenticates users before routing them by assigned role -->
+<!-- ===================================================== -->
+
 
     <div class="login-box">
         <h1>Course Organization Application</h1>
         <h2>Login</h2>
 
+        
+<!-- ===================================================== -->
+<!-- Login Error Display                                 -->
+<!-- Shows authentication feedback when login fails      -->
+<!-- ===================================================== -->
         {% if error %}
             <p class="error">{{ error }}</p>
         {% endif %}

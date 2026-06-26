@@ -6,15 +6,38 @@
 </head>
 <body>
 
+<!-- ===================================================== -->
+<!-- Administrator Reports Page                            -->
+<!-- Displays system-level statistics generated from database record counts. -->
+<!-- ===================================================== -->
+
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>System Reports</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
+
 <main>
     <h2>Application Statistics</h2>
 
-    <section class="cards">
+    
+<!-- ===================================================== -->
+<!-- System Statistics Cards                               -->
+<!-- Loops through report data passed from Flask and displays record totals. -->
+<!-- ===================================================== -->
+<section class="cards">
         {% for label, value in stats.items() %}
             <div class="card">
                 <h3>{{ label }}</h3>

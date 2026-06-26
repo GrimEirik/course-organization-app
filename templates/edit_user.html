@@ -6,13 +6,36 @@
 </head>
 <body>
 
+<!-- ===================================================== -->
+<!-- Edit User Page                                        -->
+<!-- Allows administrators to update existing user records and roles. -->
+<!-- ===================================================== -->
+
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Edit User</h1>
     <a href="{{ url_for('manage_users') }}">Back to Manage Users</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
+
 <main>
-    <form method="POST" class="form-box">
+    
+<!-- ===================================================== -->
+<!-- Edit User Form                                        -->
+<!-- Displays current user data and submits updates to the edit-user route. -->
+<!-- ===================================================== -->
+<form method="POST" class="form-box">
         <label>Name</label>
         <input type="text" name="name" value="{{ user['name'] }}" required>
 

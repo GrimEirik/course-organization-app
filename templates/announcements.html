@@ -5,13 +5,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<!-- ===================================================== -->
+<!-- Announcements Page                                    -->
+<!-- Displays course announcements posted by instructors.  -->
+<!-- ===================================================== -->
+
+
+<!-- ===================================================== -->
+<!-- Page Header                                           -->
+<!-- Displays the page title and primary navigation link.  -->
+<!-- ===================================================== -->
+
 <header>
     <h1>Announcements</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Page Content                                     -->
+<!-- Contains the primary data, form, or feature content for this page. -->
+<!-- ===================================================== -->
+
 <main>
-    {% for announcement in announcements %}
+    
+<!-- ===================================================== -->
+<!-- Announcement Output Loop                              -->
+<!-- Displays each announcement record passed from the Flask route. -->
+<!-- ===================================================== -->
+{% for announcement in announcements %}
         <div class="card wide">
             <h2>{{ announcement["title"] }}</h2>
             <p>{{ announcement["message"] }}</p>

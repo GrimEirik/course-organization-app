@@ -5,14 +5,34 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<!-- ===================================================== -->
+<!-- Privacy Statement Page                              -->
+<!-- Explains prototype data usage and privacy limitations -->
+<!-- ===================================================== -->
 
+
+
+<!-- ===================================================== -->
+<!-- Header Navigation Section                           -->
+<!-- Displays page title and primary navigation link     -->
+<!-- ===================================================== -->
 <header>
     <h1>Privacy Statement</h1>
     <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 </header>
 
+
+<!-- ===================================================== -->
+<!-- Main Content Section                                -->
+<!-- Contains the primary page functionality and displayed data -->
+<!-- ===================================================== -->
 <main>
-    <div class="business-panel">
+    
+<!-- ===================================================== -->
+<!-- Business Information Panel                          -->
+<!-- Displays professional informational content for users -->
+<!-- ===================================================== -->
+<div class="business-panel">
         <h2>Application Privacy Statement</h2>
 
         <p>
@@ -41,6 +61,11 @@
     </div>
 </main>
 
+
+<!-- ===================================================== -->
+<!-- Standard Footer Section                             -->
+<!-- Provides navigation to about, privacy, and contact pages -->
+<!-- ===================================================== -->
 <footer>
     <a href="{{ url_for('about') }}">About</a>
     <a href="{{ url_for('privacy') }}">Privacy Statement</a>
